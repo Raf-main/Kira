@@ -11,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Domain.Shared", "src\BuildingBlocks\Kira.Domain.Shared\Kira.Domain.Shared.csproj", "{29750823-CBF6-497B-82CA-AECE6490C311}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Infrastructure.Shared", "src\BuildingBlocks\Kira.Infrastructure.Shared\Kira.Infrastructure.Shared.csproj", "{87722BDE-8D2E-45DC-B6D1-598990888057}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,12 +23,17 @@ Global
 		{29750823-CBF6-497B-82CA-AECE6490C311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29750823-CBF6-497B-82CA-AECE6490C311}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29750823-CBF6-497B-82CA-AECE6490C311}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87722BDE-8D2E-45DC-B6D1-598990888057}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87722BDE-8D2E-45DC-B6D1-598990888057}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87722BDE-8D2E-45DC-B6D1-598990888057}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87722BDE-8D2E-45DC-B6D1-598990888057}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{29750823-CBF6-497B-82CA-AECE6490C311} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
+		{87722BDE-8D2E-45DC-B6D1-598990888057} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23C8D387-4978-4470-9726-84E174EB2B56}
