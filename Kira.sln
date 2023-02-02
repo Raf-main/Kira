@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33213.308
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{A9B663DE-653D-409B-BDBF-113201F35205}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingBlocks", "{07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{CF3ADBD0-057D-40D0-A639-4F800B2CD356}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Domain.Shared", "src\BuildingBlocks\Kira.Domain.Shared\Kira.Domain.Shared.csproj", "{29750823-CBF6-497B-82CA-AECE6490C311}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{29750823-CBF6-497B-82CA-AECE6490C311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29750823-CBF6-497B-82CA-AECE6490C311}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29750823-CBF6-497B-82CA-AECE6490C311}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29750823-CBF6-497B-82CA-AECE6490C311}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{29750823-CBF6-497B-82CA-AECE6490C311} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23C8D387-4978-4470-9726-84E174EB2B56}
+	EndGlobalSection
+EndGlobal
