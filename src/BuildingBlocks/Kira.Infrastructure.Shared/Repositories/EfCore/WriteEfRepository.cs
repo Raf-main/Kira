@@ -2,13 +2,13 @@
 
 namespace Kira.Infrastructure.Shared.Repositories.EfCore;
 
-public abstract class WriteRepository<TEntity> : IAsyncWriteRepository<TEntity>
+public abstract class WriteEfRepository<TEntity> : IAsyncWriteRepository<TEntity>
     where TEntity : class
 {
     protected readonly DbContext Context;
     protected readonly DbSet<TEntity> Table;
 
-    protected WriteRepository(DbContext context)
+    protected WriteEfRepository(DbContext context)
     {
         Context = context;
         Table = context.Set<TEntity>();

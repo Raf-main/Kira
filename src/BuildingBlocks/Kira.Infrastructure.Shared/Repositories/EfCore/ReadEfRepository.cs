@@ -3,13 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kira.Infrastructure.Shared.Repositories.EfCore;
 
-public abstract class ReadRepository<TEntity, TKey> : IAsyncReadRepository<TEntity, TKey>
+public abstract class ReadEfRepository<TEntity, TKey> : IAsyncReadRepository<TEntity, TKey>
     where TEntity : class, IHasKey<TKey>
 {
     protected readonly DbContext Context;
     protected readonly DbSet<TEntity> Table;
 
-    protected ReadRepository(DbContext context)
+    protected ReadEfRepository(DbContext context)
     {
         Context = context;
         Table = context.Set<TEntity>();
@@ -23,7 +23,7 @@ public abstract class ReadRepository<TEntity, TKey> : IAsyncReadRepository<TEnti
     public Task<IEnumerable<TEntity>> GetPagedAsync(int pageNumber, int pageSize)
     {
         return Task.FromResult(Table.Skip((pageNumber - 1) * pageSize)
-            .Take(50)
+            .Take(pageSize)
             .AsNoTracking()
             .AsEnumerable());
     }

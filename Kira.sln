@@ -9,9 +9,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BuildingBlocks", "BuildingB
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{CF3ADBD0-057D-40D0-A639-4F800B2CD356}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Domain.Shared", "src\BuildingBlocks\Kira.Domain.Shared\Kira.Domain.Shared.csproj", "{29750823-CBF6-497B-82CA-AECE6490C311}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.Domain.Shared", "src\BuildingBlocks\Kira.Domain.Shared\Kira.Domain.Shared.csproj", "{29750823-CBF6-497B-82CA-AECE6490C311}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Infrastructure.Shared", "src\BuildingBlocks\Kira.Infrastructure.Shared\Kira.Infrastructure.Shared.csproj", "{87722BDE-8D2E-45DC-B6D1-598990888057}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.Infrastructure.Shared", "src\BuildingBlocks\Kira.Infrastructure.Shared\Kira.Infrastructure.Shared.csproj", "{87722BDE-8D2E-45DC-B6D1-598990888057}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "IdentityService", "IdentityService", "{F84799BF-188B-4974-B378-A529E014DDB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kira.IdentityService.API", "src\Services\IdentityService\Kira.IdentityService.API\Kira.IdentityService.API.csproj", "{B506E5A2-A398-4F63-8830-74E118C5F112}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Utils.Shared", "src\BuildingBlocks\Kira.Utils.Shared\Kira.Utils.Shared.csproj", "{CA1FE34B-C312-4731-97A6-4690645392AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kira.Security.Shared", "src\BuildingBlocks\Kira.Security.Shared\Kira.Security.Shared.csproj", "{0BA6074F-99E4-410B-9C54-EBCC164E4398}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +35,18 @@ Global
 		{87722BDE-8D2E-45DC-B6D1-598990888057}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87722BDE-8D2E-45DC-B6D1-598990888057}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87722BDE-8D2E-45DC-B6D1-598990888057}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B506E5A2-A398-4F63-8830-74E118C5F112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B506E5A2-A398-4F63-8830-74E118C5F112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B506E5A2-A398-4F63-8830-74E118C5F112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B506E5A2-A398-4F63-8830-74E118C5F112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA1FE34B-C312-4731-97A6-4690645392AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA1FE34B-C312-4731-97A6-4690645392AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA1FE34B-C312-4731-97A6-4690645392AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA1FE34B-C312-4731-97A6-4690645392AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA6074F-99E4-410B-9C54-EBCC164E4398}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA6074F-99E4-410B-9C54-EBCC164E4398}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA6074F-99E4-410B-9C54-EBCC164E4398}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA6074F-99E4-410B-9C54-EBCC164E4398}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -34,6 +54,10 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{29750823-CBF6-497B-82CA-AECE6490C311} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
 		{87722BDE-8D2E-45DC-B6D1-598990888057} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
+		{F84799BF-188B-4974-B378-A529E014DDB0} = {A9B663DE-653D-409B-BDBF-113201F35205}
+		{B506E5A2-A398-4F63-8830-74E118C5F112} = {F84799BF-188B-4974-B378-A529E014DDB0}
+		{CA1FE34B-C312-4731-97A6-4690645392AD} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
+		{0BA6074F-99E4-410B-9C54-EBCC164E4398} = {07CEFC7E-BD68-477B-96D5-7A9AD05D0D6D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {23C8D387-4978-4470-9726-84E174EB2B56}
