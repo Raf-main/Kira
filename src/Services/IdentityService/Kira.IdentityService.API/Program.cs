@@ -28,12 +28,12 @@ builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 
 // db
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 builder.Services.AddDbContext<IdentityDbContext>(options =>
 {
     options.UseSqlServer(identityConnectionString);
 });
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // services
 builder.Services.AddScoped<IAccountService, AccountService>();

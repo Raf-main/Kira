@@ -1,13 +1,14 @@
 ﻿using Kira.IdentityService.API.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace Kira.IdentityService.API.Data.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly IdentityServerDbContext _context;
+    private readonly DbContext _context;
     private readonly ILogger<UnitOfWork> _logger;
 
-    public UnitOfWork(IdentityServerDbContext context, ILogger<UnitOfWork> logger)
+    public UnitOfWork(DbContext context, ILogger<UnitOfWork> logger)
     {
         _context = context;
         _logger = logger;

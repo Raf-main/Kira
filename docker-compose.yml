@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  kira.identityservice.api:
+    image: ${DOCKER_REGISTRY-}kiraidentityserviceapi
+    build:
+      context: .
+      dockerfile: src/Services/IdentityService/Kira.IdentityService.API/Dockerfile
+
+  kira.apigateway.ocelot:
+    image: ${DOCKER_REGISTRY-}kiraapigatewayocelot
+    build:
+      context: .
+      dockerfile: src/ApiGateways/Kira.ApiGateway.Ocelot/Dockerfile
+
