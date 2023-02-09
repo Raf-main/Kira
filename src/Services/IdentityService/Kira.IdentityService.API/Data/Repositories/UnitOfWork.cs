@@ -8,7 +8,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly DbContext _context;
     private readonly ILogger<UnitOfWork> _logger;
 
-    public UnitOfWork(DbContext context, ILogger<UnitOfWork> logger)
+    public UnitOfWork(IdentityServerDbContext context, ILogger<UnitOfWork> logger)
     {
         _context = context;
         _logger = logger;

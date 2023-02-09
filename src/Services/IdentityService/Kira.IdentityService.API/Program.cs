@@ -1,3 +1,4 @@
+using Kira.IdentityService.API.Data.Contexts;
 using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories;
 using Kira.IdentityService.API.Middleware;
@@ -8,7 +9,6 @@ using Kira.Security.Shared.Jwt.Services;
 using Kira.Utils.Shared.Cookie;
 using Kira.Utils.Shared.Time;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +28,7 @@ builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped<ICookieService, CookieService>();
 
 // db
-builder.Services.AddDbContext<IdentityDbContext>(options =>
+builder.Services.AddDbContext<IdentityServerDbContext>(options =>
 {
     options.UseSqlServer(identityConnectionString);
 });
@@ -44,8 +44,9 @@ builder.Services.AddJwtAuthentication(jwtOptions);
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.User.RequireUniqueEmail = true;
-});
+}).AddEntityFrameworkStores<IdentityServerDbContext>();
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
