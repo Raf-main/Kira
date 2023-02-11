@@ -3,6 +3,7 @@ using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories;
 using Kira.IdentityService.API.Middleware;
 using Kira.IdentityService.API.Services;
+using Kira.Infrastructure.Shared.Repositories.EfCore.Extensions;
 using Kira.Security.Shared.Jwt.Extensions;
 using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
@@ -46,6 +47,9 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<IdentityServerDbContext>();
 
+// migrations
+builder.Services.AddDatabaseMigration<IdentityServerDbContext>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -59,7 +63,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
 app.UseCustomExceptionHandler();
 app.UseAuthentication();
 app.UseAuthorization();

@@ -6,10 +6,20 @@ services:
     build:
       context: .
       dockerfile: src/Services/IdentityService/Kira.IdentityService.API/Dockerfile
-
+    ports:
+      - "5086:80"
+    depends_on:
+      - db
   kira.apigateway.ocelot:
     image: ${DOCKER_REGISTRY-}kiraapigatewayocelot
     build:
       context: .
       dockerfile: src/ApiGateways/Kira.ApiGateway.Ocelot/Dockerfile
-
+    ports:
+      - "5266:80"
+    depends_on:
+      - db
+  db:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    ports:
+      - "1433:1433"

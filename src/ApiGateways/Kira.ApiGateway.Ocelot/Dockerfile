@@ -3,7 +3,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 80
-EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
@@ -13,6 +12,10 @@ COPY ["src/BuildingBlocks/Kira.Utils.Shared/Kira.Utils.Shared.csproj", "src/Buil
 RUN dotnet restore "src/ApiGateways/Kira.ApiGateway.Ocelot/Kira.ApiGateway.Ocelot.csproj"
 COPY . .
 WORKDIR "/src/src/ApiGateways/Kira.ApiGateway.Ocelot"
+
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
 RUN dotnet build "Kira.ApiGateway.Ocelot.csproj" -c Release -o /app/build
 
 FROM build AS publish
