@@ -6,7 +6,7 @@
     <ProjectGuid>fb122a2f-cf67-4c3f-8514-36cb0f2c7f92</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
     <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>kira.identityservice.api</DockerServiceName>
+    <DockerServiceName>kira.apigateway.ocelot</DockerServiceName>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

@@ -4,7 +4,7 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "db": "StartWithoutDebugging",
+        "identitydb": "StartWithoutDebugging",
         "kira.apigateway.ocelot": "StartDebugging",
         "kira.identityservice.api": "StartDebugging"
       }
