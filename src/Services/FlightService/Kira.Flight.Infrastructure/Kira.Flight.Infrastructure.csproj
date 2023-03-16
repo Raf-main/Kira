@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="EfCore\Contexts\" />
+    <Folder Include="EfCore\Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Kira.Infrastructure.Shared\Kira.Infrastructure.Shared.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Infrastructure.Interfaces\Kira.Flight.Infrastructure.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>

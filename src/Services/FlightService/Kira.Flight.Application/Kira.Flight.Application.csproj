@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Behaviors\" />
+    <Folder Include="Features\Airports\CreateAirport\" />
+    <Folder Include="Features\Flights\CreateFlight\" />
+    <Folder Include="Features\Seats\CreateSeat\" />
+    <Folder Include="Features\Seats\ReserveSeat\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.3.6" />
+    <PackageReference Include="MediatR" Version="11.1.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Infrastructure.Interfaces\Kira.Flight.Infrastructure.Interfaces.csproj" />
+  </ItemGroup>
+
+</Project>
