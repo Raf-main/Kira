@@ -9,6 +9,7 @@ WORKDIR /src
 COPY ["src/ApiGateways/Kira.ApiGateway.Ocelot/Kira.ApiGateway.Ocelot.csproj", "src/ApiGateways/Kira.ApiGateway.Ocelot/"]
 COPY ["src/BuildingBlocks/Kira.Security.Shared/Kira.Security.Shared.csproj", "src/BuildingBlocks/Kira.Security.Shared/"]
 COPY ["src/BuildingBlocks/Kira.Utils.Shared/Kira.Utils.Shared.csproj", "src/BuildingBlocks/Kira.Utils.Shared/"]
+WORKDIR src/ApiGateways/Kira.ApiGateway.Ocelot
 RUN dotnet restore "src/ApiGateways/Kira.ApiGateway.Ocelot/Kira.ApiGateway.Ocelot.csproj"
 COPY . .
 WORKDIR "/src/src/ApiGateways/Kira.ApiGateway.Ocelot"

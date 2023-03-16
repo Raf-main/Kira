@@ -1,4 +1,3 @@
-using Kira.Security.Shared.Jwt.Extensions;
 using Kira.Security.Shared.Jwt.Options;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -9,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
     .AddEnvironmentVariables();
 
-// options
 var jwtOptions = builder.Configuration.Get<JwtOptions>();
 
 if (jwtOptions == null)
@@ -18,10 +16,9 @@ if (jwtOptions == null)
 }
 
 builder.Services.AddOcelot(builder.Configuration);
-builder.Services.AddJwtAuthentication(jwtOptions);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-
+builder.Services.AddSwaggerForOcelot(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,9 +27,10 @@ if (!app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-await app.UseOcelot();
-app.UseAuthentication();
-app.UseAuthorization();
-app.MapControllers();
+app.UseSwagger();
+await app.UseSwaggerForOcelotUI(opt =>
+{
+    opt.PathToSwaggerGenerator = "/swagger/docs";
+}).UseOcelot();
 
 app.Run();
