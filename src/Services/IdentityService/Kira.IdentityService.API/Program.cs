@@ -3,7 +3,6 @@ using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories;
 using Kira.IdentityService.API.Middleware;
 using Kira.IdentityService.API.Services;
-using Kira.Infrastructure.Shared.Repositories.EfCore.Extensions;
 using Kira.Security.Shared.Jwt.Extensions;
 using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
@@ -11,6 +10,7 @@ using Kira.Utils.Shared.Cookie;
 using Kira.Utils.Shared.Time;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,7 +31,14 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 // db
 builder.Services.AddDbContext<IdentityServerDbContext>(options =>
 {
-    options.UseSqlServer(identityConnectionString);
+    options.UseSqlServer(identityConnectionString,
+        sqlServerOptionsAction: sqlOptions =>
+        {
+            sqlOptions.EnableRetryOnFailure(
+                5,
+                TimeSpan.FromSeconds(30),
+                null);
+        });
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -47,12 +54,16 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<IdentityServerDbContext>();
 
-// migrations
-builder.Services.AddDatabaseMigration<IdentityServerDbContext>();
-
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1",new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Identity API"
+    });
+});
 
 var app = builder.Build();
 
@@ -60,7 +71,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+    });
 }
 
 app.UseCustomExceptionHandler();
