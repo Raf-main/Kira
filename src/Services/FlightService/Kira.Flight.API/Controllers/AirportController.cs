@@ -1,5 +1,5 @@
 ﻿using Kira.API.Shared.Controllers;
-using Kira.Flight.Application.Features.Airports.CreateAirport;
+using Kira.Flight.Application.Commands.Airports.CreateAirport;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

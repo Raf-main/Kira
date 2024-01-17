@@ -20,11 +20,6 @@ public class RefreshTokenService : IRefreshTokenService
     {
         var expired = expirationTime ?? _dateTimeProvider.UtcNow().AddHours(_options.RefreshTokenExpirationTimeInHours);
 
-        return new RefreshToken
-        {
-            ExpirationTime = expired,
-            Token = Guid.NewGuid().ToString(),
-            UserId = userId
-        };
+        return new RefreshToken { ExpirationTime = expired, Token = Guid.NewGuid().ToString(), UserId = userId };
     }
 }

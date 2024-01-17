@@ -4,11 +4,11 @@ namespace Kira.Domain.Shared.Abstractions;
 
 public abstract class DomainEvent : IDomainEvent
 {
-    public Guid Id { get; }
-    public abstract string EventType { get; }
-
     protected DomainEvent()
     {
         Id = Guid.NewGuid();
     }
+
+    public Guid Id { get; }
+    public abstract string EventType { get; }
 }

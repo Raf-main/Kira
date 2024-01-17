@@ -1,8 +1,7 @@
 ﻿using Kira.Flight.Infrastructure.EfCore.Contexts;
-using Kira.Flight.Infrastructure.EfCore.Repositories;
-using Kira.Flight.Infrastructure.Interfaces.Repositories;
+using Light.Infrastructure.EfCore.Repositories;
+using Light.Infrastructure.Extensions.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,19 +13,15 @@ public static class InfrastructureExtensions
     {
         services.AddDbContext<FlightWriteDbContext>(options =>
         {
-            options.UseSqlServer(configuration.GetConnectionString("FlightWrite"),
-                sqlServerOptionsAction: sqlOptions =>
+            options.UseNpgsql(configuration.GetConnectionString("FlightWrite"),
+                sqlOptions =>
                 {
-                    sqlOptions.EnableRetryOnFailure(
-                        5,
-                        TimeSpan.FromSeconds(30),
-                        null);
+                    sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null);
                 });
         });
 
-        services.AddScoped<IFlightWriteRepository, FlightWriteRepository>();
-        services.AddScoped<ISeatWriteRepository, SeatWriteRepository>();
-        services.AddScoped<IAirportWriteRepository, AirportWriteRepository>();
-        services.AddScoped<IAirplaneWriteRepository, AirplaneWriteRepository>();
+        services.AddScoped(typeof(IAsyncWriteRepository<,>), typeof(WriteEfRepository<,>));
+        services.AddScoped(typeof(IAsyncReadRepository<,>), typeof(ReadEfRepository<,>));
+        services.AddScoped(typeof(IAsyncGenericRepository<,>), typeof(GenericEfRepository<,>));
     }
 }

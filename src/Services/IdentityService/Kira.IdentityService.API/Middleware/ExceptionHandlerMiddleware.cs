@@ -1,6 +1,6 @@
-﻿using System.Net;
+﻿using Kira.IdentityService.API.Exceptions;
+using System.Net;
 using System.Text.Json;
-using Kira.IdentityService.API.Exceptions;
 
 namespace Kira.IdentityService.API.Middleware;
 

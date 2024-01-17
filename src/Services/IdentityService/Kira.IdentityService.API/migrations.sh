@@ -1,2 +1,2 @@
-﻿dotnet tool run dotnet-ef migrations add InitialMigrations
-dotnet tool run dotnet-ef database update
+﻿dotnet-ef migrations add InitialMigrations
+dotnet-ef database update

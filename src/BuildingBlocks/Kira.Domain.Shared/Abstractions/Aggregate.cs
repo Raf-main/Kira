@@ -3,12 +3,12 @@ using Kira.Domain.Shared.Interfaces;
 
 namespace Kira.Domain.Shared.Abstractions;
 
-public abstract class Aggregate<TKey> : IAggregate<TKey>
+public abstract class Aggregate<TKey> : IAggregate<TKey> where TKey : struct
 {
+    protected IDictionary<Type, Action<object>> EventHandlers { get; set; } = new Dictionary<Type, Action<object>>();
+
     public TKey Id { get; protected set; }
     public ICollection<IDomainEvent> DomainEvents { get; protected set; } = new HashSet<IDomainEvent>();
-    protected IDictionary<Type, Action<object>> EventHandlers { get; set; } =
-        new Dictionary<Type, Action<object>>();
 
     public void AddDomainEvent(IDomainEvent domainEvent)
     {

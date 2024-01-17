@@ -10,8 +10,12 @@ public class Flight : Aggregate<Guid>
     public decimal Price { get; protected set; }
     public DateTimeOffset UtcDateTime { get; protected set; }
 
-    public static Flight Create(Guid planeId, Guid fromAirportId, Guid toAirportId, decimal price,
-        DateTimeOffset dateTime)
+    public static Flight Create(Guid planeId,
+        Guid fromAirportId,
+        Guid toAirportId,
+        decimal price,
+        DateTimeOffset dateTime
+    )
     {
         var flight = new Flight
         {

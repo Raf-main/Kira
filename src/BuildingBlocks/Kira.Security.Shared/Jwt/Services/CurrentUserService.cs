@@ -1,5 +1,5 @@
-﻿using System.Security.Claims;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
 
 namespace Kira.Security.Shared.Jwt.Services;
 
@@ -25,6 +25,7 @@ public class CurrentUserService : ICurrentUserService
     public bool IsAuthenticated()
     {
         var isAuthenticated = _httpContext.User?.Identity?.IsAuthenticated;
+
         return isAuthenticated.HasValue && isAuthenticated.Value;
     }
 

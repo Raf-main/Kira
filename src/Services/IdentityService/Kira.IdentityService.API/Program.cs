@@ -23,6 +23,7 @@ if (jwtOptions == null)
 }
 
 var identityConnectionString = builder.Configuration.GetConnectionString("Identity");
+Console.WriteLine(identityConnectionString);
 
 // utils
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
@@ -31,14 +32,10 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 // db
 builder.Services.AddDbContext<IdentityServerDbContext>(options =>
 {
-    options.UseSqlServer(identityConnectionString,
-        sqlServerOptionsAction: sqlOptions =>
-        {
-            sqlOptions.EnableRetryOnFailure(
-                5,
-                TimeSpan.FromSeconds(30),
-                null);
-        });
+    options.UseNpgsql(identityConnectionString, sqlOptions =>
+    {
+        sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null);
+    });
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -49,33 +46,26 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddJwtAuthentication(jwtOptions);
 
-builder.Services.AddIdentity<User, IdentityRole>(options =>
-{
-    options.User.RequireUniqueEmail = true;
-}).AddEntityFrameworkStores<IdentityServerDbContext>();
+builder.Services.AddIdentity<User, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+    .AddEntityFrameworkStores<IdentityServerDbContext>();
 
 builder.Services.AddControllers();
+builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1",new OpenApiInfo
-    {
-        Version = "v1",
-        Title = "Identity API"
-    });
+    options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Identity API" });
 });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-    });
-}
+
+app.UseSwagger();
+app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+
+app.UseCors(opts => { opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 
 app.UseCustomExceptionHandler();
 app.UseAuthentication();

@@ -1,5 +1,4 @@
 ﻿using Grpc.Core;
-using Kira.Flight.API.GrpcServer.Protos;
 
 namespace Kira.Flight.API.GrpcServer.Services;
 

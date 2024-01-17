@@ -1,28 +1,27 @@
-﻿using Kira.IdentityService.API.Data.Repositories;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Kira.IdentityService.API.Data.Models;
+﻿using Kira.IdentityService.API.Data.Models;
+using Kira.IdentityService.API.Data.Repositories;
 using Kira.IdentityService.API.Exceptions;
 using Kira.IdentityService.API.ViewModels.Request;
 using Kira.IdentityService.API.ViewModels.Response;
-using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
-using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
 
 namespace Kira.IdentityService.API.Services;
 
 public class AccountService : IAccountService
 {
-    private readonly IUnitOfWork _unitOfWork;
     private readonly IJwtService _jwtService;
     private readonly IRefreshTokenService _refreshTokenService;
+    private readonly IUnitOfWork _unitOfWork;
     private readonly UserManager<User> _userManager;
 
     public AccountService(IUnitOfWork unitOfWork,
         IJwtService jwtService,
         IRefreshTokenService refreshTokenService,
-        UserManager<User> userManager)
+        UserManager<User> userManager
+    )
     {
         _unitOfWork = unitOfWork;
         _jwtService = jwtService;
@@ -57,11 +56,7 @@ public class AccountService : IAccountService
 
     public async Task RegisterAsync(RegistrationRequest registrationRequest)
     {
-        var user = new User
-        {
-            UserName = registrationRequest.UserName,
-            Email = registrationRequest.Email
-        };
+        var user = new User { UserName = registrationRequest.UserName, Email = registrationRequest.Email };
 
         var result = await _userManager.CreateAsync(user, registrationRequest.Password);
 
@@ -70,8 +65,7 @@ public class AccountService : IAccountService
             var errors = result.Errors.Select(e => e.Description);
 
             throw new ValidationException(
-                $"Something went wrong while creating user with email {registrationRequest.Email}",
-                errors);
+                $"Something went wrong while creating user with email {registrationRequest.Email}", errors);
         }
     }
 
@@ -81,7 +75,7 @@ public class AccountService : IAccountService
 
         if (refreshToken == null || refreshToken.IsUsed)
         {
-            throw new NotFoundException($"Refresh token was not found");
+            throw new NotFoundException("Refresh token was not found");
         }
 
         if (refreshToken.IsExpired)
@@ -93,7 +87,7 @@ public class AccountService : IAccountService
 
         if (user == null)
         {
-            throw new NotFoundException($"User was not found");
+            throw new NotFoundException("User was not found");
         }
 
         var authClaims = await GetClaimsAsync(user);
@@ -105,7 +99,7 @@ public class AccountService : IAccountService
         await _unitOfWork.RefreshTokens.AddAsync(newRefreshToken);
         await _unitOfWork.SaveChangesAsync();
 
-        return new RefreshTokenResponse()
+        return new RefreshTokenResponse
         {
             AccessToken = newAccessToken,
             RefreshToken = newRefreshToken.Token,
@@ -117,8 +111,7 @@ public class AccountService : IAccountService
     {
         var authClaims = new List<Claim>
         {
-            new(ClaimTypes.Email, user.Email!),
-            new(ClaimTypes.NameIdentifier, user.Id)
+            new(ClaimTypes.Email, user.Email!), new(ClaimTypes.NameIdentifier, user.Id)
         };
 
         var userRoles = await _userManager.GetRolesAsync(user);

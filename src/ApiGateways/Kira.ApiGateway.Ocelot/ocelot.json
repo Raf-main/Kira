@@ -6,10 +6,11 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 5086
         }
       ],
+      "SwaggerKey":  "identity",
       "UpstreamPathTemplate": "/api/Account/{everything}",
       "UpstreamScheme": "http",
       "UpstreamHttpMethod": [ "GET", "POST" ]
@@ -22,7 +23,7 @@
         {
           "Name": "Identity API",
           "Version": "v1",
-          "Url": "http://localhost:5086/swagger/v1/swagger.json"
+          "Url": "http://host.docker.internal:5086/swagger/v1/swagger.json"
         }
       ]
     }

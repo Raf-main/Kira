@@ -1,6 +1,6 @@
 ﻿using Kira.Flight.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Kira.Flight.Infrastructure.EfCore.Configurations;
 

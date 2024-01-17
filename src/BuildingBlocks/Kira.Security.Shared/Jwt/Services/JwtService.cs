@@ -1,16 +1,16 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using Kira.Security.Shared.Jwt.Options;
+﻿using Kira.Security.Shared.Jwt.Options;
 using Kira.Utils.Shared.Time;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace Kira.Security.Shared.Jwt.Services;
 
 public class JwtService : IJwtService
 {
-    private readonly JwtOptions _jwtOptions;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly JwtOptions _jwtOptions;
 
     public JwtService(IOptions<JwtOptions> jwtOptions, IDateTimeProvider dateTimeProvider)
     {
@@ -25,13 +25,7 @@ public class JwtService : IJwtService
         var signinCredentials = new SigningCredentials(secretKey, securityAlgorithm);
         var expires = expirationTime ?? _dateTimeProvider.UtcNow().AddMinutes(_jwtOptions.TokenExpirationTimeInMinutes);
 
-        var tokenOptions = new JwtSecurityToken(
-            null,
-            null,
-            claims,
-            expires,
-            signingCredentials: signinCredentials
-        );
+        var tokenOptions = new JwtSecurityToken(null, null, claims, expires, signingCredentials: signinCredentials);
 
         var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
 

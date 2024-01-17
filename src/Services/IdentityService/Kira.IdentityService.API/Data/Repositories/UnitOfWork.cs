@@ -8,14 +8,17 @@ public class UnitOfWork : IUnitOfWork
     private readonly DbContext _context;
     private readonly ILogger<UnitOfWork> _logger;
 
+#pragma warning disable CS0649
+    private readonly IRefreshTokenRepository? _refreshTokenRepository;
+#pragma warning restore CS0649
+
     public UnitOfWork(IdentityServerDbContext context, ILogger<UnitOfWork> logger)
     {
         _context = context;
         _logger = logger;
     }
 
-    public IRefreshTokenRepository RefreshTokens =>
-        _refreshTokenRepository ?? new RefreshTokenRepository(_context);
+    public IRefreshTokenRepository RefreshTokens => _refreshTokenRepository ?? new RefreshTokenRepository(_context);
 
     public async Task SaveChangesAsync()
     {
@@ -32,8 +35,4 @@ public class UnitOfWork : IUnitOfWork
             throw;
         }
     }
-
-#pragma warning disable CS0649
-    private readonly IRefreshTokenRepository? _refreshTokenRepository;
-#pragma warning restore CS0649
 }

@@ -11,15 +11,14 @@ public class CookieService : ICookieService
         _httpContext = httpContextAccessor.HttpContext;
     }
 
-    public void SetResponseCookie(string key, string value, DateTime expirationDate, bool httpOnly = false,
-        SameSiteMode sameSite = SameSiteMode.None)
+    public void SetResponseCookie(string key,
+        string value,
+        DateTime expirationDate,
+        bool httpOnly = false,
+        SameSiteMode sameSite = SameSiteMode.None
+    )
     {
-        var cookieOptions = new CookieOptions
-        {
-            HttpOnly = httpOnly,
-            SameSite = sameSite,
-            Expires = expirationDate
-        };
+        var cookieOptions = new CookieOptions { HttpOnly = httpOnly, SameSite = sameSite, Expires = expirationDate };
 
         _httpContext.Response.Cookies.Append(key, value, cookieOptions);
     }

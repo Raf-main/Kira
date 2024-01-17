@@ -9,11 +9,7 @@ public class Airplane : Aggregate<Guid>
 
     public static Airplane Create(string name, string model)
     {
-        var airplane = new Airplane
-        {
-            Name = name,
-            Model = model
-        };
+        var airplane = new Airplane { Name = name, Model = model };
 
         return airplane;
     }

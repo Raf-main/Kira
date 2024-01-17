@@ -4,8 +4,6 @@ namespace Kira.IdentityService.API.Exceptions;
 
 public class ValidationException : Exception
 {
-    public IEnumerable<string> ValidationErrors { get; set; } = new List<string>();
-
     public ValidationException() { }
 
     public ValidationException(string message) : base(message) { }
@@ -15,12 +13,14 @@ public class ValidationException : Exception
         ValidationErrors = validationErrors;
     }
 
-    public ValidationException(string message,
-        IEnumerable<string> validationErrors,
-        Exception innerException) : base(message, innerException)
+    public ValidationException(string message, IEnumerable<string> validationErrors, Exception innerException) : base(
+        message, innerException)
     {
         ValidationErrors = validationErrors;
     }
 
     protected ValidationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+    public IEnumerable<string> ValidationErrors { get; set; } = new List<string>();
+
+    public override string Message => string.Join(Environment.NewLine, ValidationErrors);
 }

@@ -1,5 +1,5 @@
 ﻿using Kira.API.Shared.Controllers;
-using Kira.Flight.Application.Features.Flights.CreateFlight;
+using Kira.Flight.Application.Commands.Flights.CreateFlight;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,7 +11,7 @@ public class FlightController : BasicController
 {
     public FlightController(IMediator mediator) : base(mediator) { }
 
-    public async Task<IActionResult> CreateAirport(CreateFlightCommand command)
+    public async Task<IActionResult> CreateFlight(CreateFlightCommand command)
     {
         var id = await Mediator.Send(command);
 

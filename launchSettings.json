@@ -5,8 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "identitydb": "StartWithoutDebugging",
-        "kira.apigateway.ocelot": "StartDebugging",
-        "kira.identityservice.api": "StartDebugging"
+        "apigateway": "StartDebugging",
+        "identityservice": "StartDebugging"
       }
     }
   }

@@ -1,14 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Light.Core.Extensions.Entities;
 using System.ComponentModel.DataAnnotations;
-using Kira.Domain.Shared.Interfaces;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Kira.IdentityService.API.Data.Models;
 
-public class RefreshToken : IHasKey<int>
+public class RefreshToken : Entity<int>
 {
     [Key]
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    public override int Id { get; set; }
 
     public string Token { get; set; } = null!;
     public string UserId { get; set; } = null!;

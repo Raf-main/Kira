@@ -1,18 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Kira.Infrastructure.Shared\Kira.Infrastructure.Shared.csproj" />
-    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
-  </ItemGroup>
 
 </Project>

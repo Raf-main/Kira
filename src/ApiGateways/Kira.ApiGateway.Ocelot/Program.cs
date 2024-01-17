@@ -5,8 +5,7 @@ using Ocelot.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Configuration.AddJsonFile("ocelot.json", optional: false, reloadOnChange: true)
-    .AddEnvironmentVariables();
+builder.Configuration.AddJsonFile("ocelot.json", false, true).AddEnvironmentVariables();
 
 var jwtOptions = builder.Configuration.Get<JwtOptions>();
 
@@ -22,15 +21,14 @@ builder.Services.AddSwaggerForOcelot(builder.Configuration);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseDeveloperExceptionPage();
-}
+app.UseDeveloperExceptionPage();
 
-app.UseSwagger();
-await app.UseSwaggerForOcelotUI(opt =>
-{
-    opt.PathToSwaggerGenerator = "/swagger/docs";
-}).UseOcelot();
+app.UseCors(opts => { opts.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
+
+app.UseStaticFiles();
+
+app.UseSwaggerForOcelotUI(opt => { opt.PathToSwaggerGenerator = "/swagger/docs"; });
+
+app.UseOcelot().Wait();
 
 app.Run();

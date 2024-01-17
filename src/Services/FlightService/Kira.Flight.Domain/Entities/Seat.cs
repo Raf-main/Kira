@@ -10,18 +10,18 @@ public class Seat : Aggregate<Guid>
 
     public static Seat Create(string seatNumber, Guid flightId, bool isReserved = false)
     {
-        var seat = new Seat
-        {
-            SeatNumber = seatNumber,
-            FlightId = flightId,
-            IsReserved = isReserved
-        };
+        var seat = new Seat { SeatNumber = seatNumber, FlightId = flightId, IsReserved = isReserved };
 
         return seat;
     }
 
     public void ReserveSeat()
     {
-        if(IsReserved)
+        IsReserved = true;
+    }
+
+    public void ReleaseSeat()
+    {
+        IsReserved = false;
     }
 }

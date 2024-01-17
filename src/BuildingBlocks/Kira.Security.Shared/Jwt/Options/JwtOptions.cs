@@ -1,5 +1,5 @@
-﻿using System.Text;
-using Microsoft.IdentityModel.Tokens;
+﻿using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Kira.Security.Shared.Jwt.Options;
 
@@ -14,6 +14,7 @@ public class JwtOptions
     public int RefreshTokenExpirationTimeInHours { get; set; }
     public IEnumerable<string> ValidIssuers { get; set; } = null!;
     public IEnumerable<string> ValidAudiences { get; set; } = null!;
+
     public SymmetricSecurityKey GetSymmetricSecurityKey()
     {
         return new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey));

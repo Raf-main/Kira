@@ -13,8 +13,7 @@ public class AccountController : ControllerBase
     private readonly IAccountService _accountService;
     private readonly ICookieService _cookieService;
 
-    public AccountController(IAccountService accountService,
-        ICookieService cookieService)
+    public AccountController(IAccountService accountService, ICookieService cookieService)
     {
         _accountService = accountService;
         _cookieService = cookieService;
@@ -60,16 +59,12 @@ public class AccountController : ControllerBase
             return Unauthorized("Request doesn't contain refresh token");
         }
 
-        var refreshTokenRequest = new RefreshTokenRequest
-        {
-            RefreshToken = refreshToken
-        };
+        var refreshTokenRequest = new RefreshTokenRequest { RefreshToken = refreshToken };
 
         var refreshTokenResponse = await _accountService.RefreshTokenAsync(refreshTokenRequest);
 
         _cookieService.SetResponseCookie(RefreshTokenCookieKey, refreshTokenResponse.RefreshToken,
-            refreshTokenResponse.RefreshTokenExpirationTime,
-            true, SameSiteMode.Strict);
+            refreshTokenResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
         return Ok(refreshTokenResponse.AccessToken);
     }

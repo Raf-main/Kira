@@ -1,3 +1,5 @@
-﻿namespace Kira.Domain.Shared.Interfaces;
+﻿using Light.Core.Extensions.Entities.Interfaces;
 
-public interface IAggregate<TKey> : IEntity<TKey>, IHasDomainEvent { }
+namespace Kira.Domain.Shared.Interfaces;
+
+public interface IAggregate<TKey> : IEntity<TKey>, IHasDomainEvent where TKey : struct { }

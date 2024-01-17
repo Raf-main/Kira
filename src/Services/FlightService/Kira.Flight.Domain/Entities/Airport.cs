@@ -8,10 +8,7 @@ public class Airport : Aggregate<Guid>
 
     public static Airport Create(string name)
     {
-        var airport = new Airport
-        {
-            Name = name
-        };
+        var airport = new Airport { Name = name };
 
         return airport;
     }

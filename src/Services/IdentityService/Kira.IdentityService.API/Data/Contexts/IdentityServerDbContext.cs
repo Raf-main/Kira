@@ -6,7 +6,6 @@ namespace Kira.IdentityService.API.Data.Contexts;
 
 public class IdentityServerDbContext : IdentityDbContext
 {
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
-
     public IdentityServerDbContext(DbContextOptions opts) : base(opts) { }
+    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 }

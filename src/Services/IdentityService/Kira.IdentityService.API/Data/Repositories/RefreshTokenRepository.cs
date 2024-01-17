@@ -1,5 +1,5 @@
 ﻿using Kira.IdentityService.API.Data.Models;
-using Kira.Infrastructure.Shared.Repositories.EfCore;
+using Light.Infrastructure.EfCore.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Kira.IdentityService.API.Data.Repositories;

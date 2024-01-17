@@ -11,7 +11,7 @@ public class AirplaneEntityConfiguration : IEntityTypeConfiguration<Airplane>
         builder.HasKey(p => p.Id);
         builder.Property(p => p.Id).ValueGeneratedNever();
         builder.Property(p => p.Name).IsRequired();
-        builder.Property(p=>p.Model).IsRequired();
+        builder.Property(p => p.Model).IsRequired();
         builder.Ignore(p => p.DomainEvents);
     }
 }
