@@ -26,7 +26,7 @@ public class AccountController(IAccountService accountService, ICookieService co
         cookieService.SetResponseCookie(RefreshTokenCookieKey, loginResponse.RefreshToken,
             loginResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
-        return Ok(new { loginResponse.RefreshToken, loginResponse.User });
+        return Ok(new { loginResponse.AccessToken, loginResponse.User });
     }
 
     [HttpPost]
@@ -50,7 +50,7 @@ public class AccountController(IAccountService accountService, ICookieService co
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> RefreshAccessToken()
     {
-        if (cookieService.TryGetRequestCookie(RefreshTokenCookieKey, out var refreshToken) ||
+        if (!cookieService.TryGetRequestCookie(RefreshTokenCookieKey, out var refreshToken) ||
             string.IsNullOrEmpty(refreshToken))
         {
             return Unauthorized("Request doesn't contain refresh token");

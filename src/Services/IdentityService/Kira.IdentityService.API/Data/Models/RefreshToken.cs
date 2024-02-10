@@ -15,7 +15,7 @@ public class RefreshToken : Entity<int>
     [MaxLength(50)]
     public string UserId { get; set; } = null!;
     public bool IsUsed { get; set; }
-    public bool IsExpired => ExpirationTime > DateTime.UtcNow;
+    public bool IsExpired => ExpirationTime < DateTime.UtcNow;
     public DateTime ExpirationTime { get; set; }
 
     [ForeignKey(nameof(UserId))]

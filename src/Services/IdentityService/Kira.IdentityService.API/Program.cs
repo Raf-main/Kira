@@ -15,11 +15,14 @@ using Kira.Utils.Shared.Time;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // options
-var jwtOptions = builder.Configuration.Get<JwtOptions>();
+var jwtOptionsSection = builder.Configuration.GetSection(JwtOptions.OptionsKey);
+var jwtOptions = jwtOptionsSection.Get<JwtOptions>();
+builder.Services.Configure<JwtOptions>(jwtOptionsSection);
 
 if (jwtOptions == null)
 {
@@ -27,8 +30,9 @@ if (jwtOptions == null)
 }
 
 var identityConnectionString = builder.Configuration.GetConnectionString("Identity");
-Console.WriteLine(identityConnectionString);
 
+// logging
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 // utils
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped<ICookieService, CookieService>();
@@ -42,7 +46,9 @@ builder.Services.AddDbContext<IdentityServerDbContext>(options =>
     });
 });
 
+builder.Services.AddScoped<DbContext, IdentityServerDbContext>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<IDatabaseMigrationApplier, DatabaseMigrationApplier>();
 
 // services
 builder.Services.AddScoped<IAccountService, AccountService>();
@@ -70,14 +76,8 @@ builder.Services.AddSwaggerGen(options =>
     options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Identity API" });
 });
 
-// Migrations
-builder.Services.AddTransient<IDatabaseMigrationApplier, DatabaseMigrationApplier>();
-var serviceProvider = builder.Services.BuildServiceProvider();
-var migrationApplier = serviceProvider.GetRequiredService<IDatabaseMigrationApplier>();
-migrationApplier.ApplyMigrations();
-
 var app = builder.Build();
-
+app.Services.CreateScope().ServiceProvider.GetRequiredService<IDatabaseMigrationApplier>().ApplyMigrations();
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();

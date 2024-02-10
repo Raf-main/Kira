@@ -5,6 +5,7 @@ namespace Kira.Security.Shared.Jwt.Options;
 
 public class JwtOptions
 {
+    public const string OptionsKey = "JwtOptions";
     public string? Algorithm { get; set; }
     public string SecretKey { get; set; } = null!;
     public bool ValidateIssuer { get; set; }
