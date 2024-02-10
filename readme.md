@@ -15,14 +15,14 @@ Development
 
 ## Technology stack
 
-![C#](https://img.shields.io/badge/-C_Sharp-239120?style=flat-square&logo=csharp) ![.NET](https://img.shields.io/badge/-.NET-512BD4?style=flat-square&logo=.NET) ![TypeScript](https://img.shields.io/badge/-TypeScript-white?style=flat-square&logo=typescript&color=white) ![Angular](https://img.shields.io/badge/-Angular-DD0031?style=flat-square&logo=Angular) ![Microsoft Sql Server](https://img.shields.io/badge/-Microsoft_Sql_Server-DD0031?style=flat-square&logo=microsoftsqlserver) ![MongoDB](https://img.shields.io/badge/-MongoDB-white?style=flat-square&logo=mongodb) ![RabbitMQ](https://img.shields.io/badge/-RabbitMQ-white?style=flat-square&logo=rabbitmq) ![Docker](https://img.shields.io/badge/-Docker-white?style=flat-square&logo=docker)
+![C#](https://img.shields.io/badge/-C_Sharp-239120?style=for-the-badge&logo=csharp) ![.NET](https://img.shields.io/badge/-.NET-512BD4?style=for-the-badge&logo=.NET) ![JavaScript](https://img.shields.io/badge/-JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) ![React](https://img.shields.io/badge/-ReactJs-61DAFB?style=for-the-badge&logo=react&logoColor=white) ![Redux](https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white) ![Postgresql](https://img.shields.io/badge/-PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white) ![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white) ![RabbitMQ](https://img.shields.io/badge/rabbitmq-%23FF6600.svg?&style=for-the-badge&logo=rabbitmq&logoColor=white) ![Docker](https://img.shields.io/badge/-Docker-white?style=for-the-badge&logo=docker)
 
 Services
 
 | Service  | Description | Architecture |
 | --- | --- | --- |
-| ApiGateway | Ocelot API Gateway | ... |
-| Identity | Responsible for users authentication | ... |
+| ApiGateway | Ocelot API Gateway |  |
+| Identity | Responsible for user authentication |  |
 | Flight  | Responsible for managing flights | Clean + DDD |
 | Booking | Responsible for booking flights | Clean + DDD |
 
@@ -42,12 +42,12 @@ Backend
 
 UI
 
-- Angular
+- React/Redux
 
-Database
+Databases
 
-- MS SQL (write db)
-- MongoDB (read db)
+- PostgreSQL
+- MongoDB (as read db)
 - DB Connectivity : Entityframework Core - Code First
 
 Features and packages
@@ -59,6 +59,7 @@ Features and packages
 - Fluent validation
 - EF Core
 - Automapper
+- Serilog
 
 Testing
 
@@ -68,7 +69,7 @@ Testing
 CI/CD
 
 - Docker
-- k8s (future plan)
+- k8s/Azure (future plan)
 
 ## Contact
 
