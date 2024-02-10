@@ -4,18 +4,12 @@ using MediatR;
 
 namespace Kira.Flight.Application.Commands.Seats.ReserveSeat;
 
-public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, Unit>
+public class ReserveSeatCommandHandler(IAsyncGenericRepository<Seat, Guid> repository)
+    : IRequestHandler<ReserveSeatCommand, Unit>
 {
-    private readonly IAsyncGenericRepository<Seat, Guid> _repository;
-
-    public ReserveSeatCommandHandler(IAsyncGenericRepository<Seat, Guid> repository)
-    {
-        _repository = repository;
-    }
-
     public async Task<Unit> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _repository.GetByKeyAsync(request.SeatId, cancellationToken);
+        var entity = await repository.GetByKeyAsync(request.SeatId, cancellationToken);
 
         if (entity == null)
         {
@@ -23,7 +17,7 @@ public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, Uni
         }
 
         entity.ReserveSeat();
-        await _repository.UpdateAsync(entity, cancellationToken);
+        await repository.UpdateAsync(entity, cancellationToken);
 
         return Unit.Value;
     }

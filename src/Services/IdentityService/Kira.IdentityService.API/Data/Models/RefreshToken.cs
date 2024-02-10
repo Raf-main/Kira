@@ -10,7 +10,9 @@ public class RefreshToken : Entity<int>
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public override int Id { get; set; }
 
+    [MaxLength(50)]
     public string Token { get; set; } = null!;
+    [MaxLength(50)]
     public string UserId { get; set; } = null!;
     public bool IsUsed { get; set; }
     public bool IsExpired => ExpirationTime > DateTime.UtcNow;

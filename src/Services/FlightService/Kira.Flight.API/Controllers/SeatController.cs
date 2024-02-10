@@ -8,10 +8,8 @@ namespace Kira.Flight.API.Controllers;
 
 [ApiController]
 [Route("[controller]s/[action]")]
-public class SeatController : BasicController
+public class SeatController(IMediator mediator) : BasicController(mediator)
 {
-    public SeatController(IMediator mediator) : base(mediator) { }
-
     public async Task<IActionResult> CreateSeat(CreateSeatCommand command)
     {
         var id = await Mediator.Send(command);

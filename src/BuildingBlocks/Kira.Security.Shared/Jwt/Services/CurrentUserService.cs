@@ -3,14 +3,9 @@ using System.Security.Claims;
 
 namespace Kira.Security.Shared.Jwt.Services;
 
-public class CurrentUserService : ICurrentUserService
+public class CurrentUserService(IHttpContextAccessor contextAccessor) : ICurrentUserService
 {
-    private readonly HttpContext _httpContext;
-
-    public CurrentUserService(IHttpContextAccessor contextAccessor)
-    {
-        _httpContext = contextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(contextAccessor));
-    }
+    private readonly HttpContext _httpContext = contextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(contextAccessor));
 
     public ClaimsPrincipal GetUser()
     {

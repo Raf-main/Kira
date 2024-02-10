@@ -46,7 +46,15 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddJwtAuthentication(jwtOptions);
 
-builder.Services.AddIdentity<User, IdentityRole>(options => { options.User.RequireUniqueEmail = true; })
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+    {
+        options.User.RequireUniqueEmail = true;
+        options.Password.RequireDigit = false;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredLength = 6;
+    })
     .AddEntityFrameworkStores<IdentityServerDbContext>();
 
 builder.Services.AddControllers();

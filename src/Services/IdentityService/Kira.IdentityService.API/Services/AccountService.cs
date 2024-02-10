@@ -7,31 +7,20 @@ using Kira.Security.Shared.Jwt.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using LoginRequest = Kira.IdentityService.API.ViewModels.Request.LoginRequest;
 
 namespace Kira.IdentityService.API.Services;
 
-public class AccountService : IAccountService
+public class AccountService(
+    IUnitOfWork unitOfWork,
+    IJwtService jwtService,
+    IRefreshTokenService refreshTokenService,
+    UserManager<User> userManager
+) : IAccountService
 {
-    private readonly IJwtService _jwtService;
-    private readonly IRefreshTokenService _refreshTokenService;
-    private readonly IUnitOfWork _unitOfWork;
-    private readonly UserManager<User> _userManager;
-
-    public AccountService(IUnitOfWork unitOfWork,
-        IJwtService jwtService,
-        IRefreshTokenService refreshTokenService,
-        UserManager<User> userManager
-    )
-    {
-        _unitOfWork = unitOfWork;
-        _jwtService = jwtService;
-        _refreshTokenService = refreshTokenService;
-        _userManager = userManager;
-    }
-
     public async Task<LoginResponse> LoginAsync(LoginRequest loginRequest)
     {
-        var user = await _userManager.FindByEmailAsync(loginRequest.Email);
+        var user = await userManager.FindByEmailAsync(loginRequest.Email);
 
         if (user == null)
         {
@@ -40,25 +29,20 @@ public class AccountService : IAccountService
 
         var authClaims = await GetClaimsAsync(user);
 
-        var accessToken = _jwtService.GenerateAccessToken(authClaims);
-        var refreshToken = _refreshTokenService.GenerateRefreshToken(user.Id);
+        var accessToken = jwtService.GenerateAccessToken(authClaims);
+        var refreshToken = refreshTokenService.GenerateRefreshToken(user.Id);
 
-        await _unitOfWork.RefreshTokens.AddAsync(refreshToken);
-        await _unitOfWork.SaveChangesAsync();
+        await unitOfWork.RefreshTokens.AddAsync(refreshToken);
+        await unitOfWork.SaveChangesAsync();
 
-        return new LoginResponse
-        {
-            AccessToken = accessToken,
-            RefreshToken = refreshToken.Token,
-            RefreshTokenExpirationTime = refreshToken.ExpirationTime
-        };
+        return new LoginResponse(accessToken, refreshToken.Token, refreshToken.ExpirationTime, GetUserResponse(user));
     }
 
     public async Task RegisterAsync(RegistrationRequest registrationRequest)
     {
         var user = new User { UserName = registrationRequest.UserName, Email = registrationRequest.Email };
 
-        var result = await _userManager.CreateAsync(user, registrationRequest.Password);
+        var result = await userManager.CreateAsync(user, registrationRequest.Password);
 
         if (!result.Succeeded)
         {
@@ -71,7 +55,7 @@ public class AccountService : IAccountService
 
     public async Task<RefreshTokenResponse> RefreshTokenAsync(RefreshTokenRequest refreshRequest)
     {
-        var refreshToken = await _unitOfWork.RefreshTokens.GetByTokenAsync(refreshRequest.RefreshToken);
+        var refreshToken = await unitOfWork.RefreshTokens.GetByTokenAsync(refreshRequest.RefreshToken);
 
         if (refreshToken == null || refreshToken.IsUsed)
         {
@@ -83,28 +67,18 @@ public class AccountService : IAccountService
             throw new SecurityTokenExpiredException("Refresh token was expired");
         }
 
-        var user = await _userManager.FindByIdAsync(refreshToken.UserId);
-
-        if (user == null)
-        {
-            throw new NotFoundException("User was not found");
-        }
-
+        var user = await userManager.FindByIdAsync(refreshToken.UserId) ?? throw new NotFoundException("User was not found");
         var authClaims = await GetClaimsAsync(user);
-        var newAccessToken = _jwtService.GenerateAccessToken(authClaims);
-        var newRefreshToken = _refreshTokenService.GenerateRefreshToken(user.Id);
+        var newAccessToken = jwtService.GenerateAccessToken(authClaims);
+        var newRefreshToken = refreshTokenService.GenerateRefreshToken(user.Id);
 
         refreshToken.IsUsed = true;
-        await _unitOfWork.RefreshTokens.UpdateAsync(refreshToken);
-        await _unitOfWork.RefreshTokens.AddAsync(newRefreshToken);
-        await _unitOfWork.SaveChangesAsync();
+        await unitOfWork.RefreshTokens.UpdateAsync(refreshToken);
+        await unitOfWork.RefreshTokens.AddAsync(newRefreshToken);
+        await unitOfWork.SaveChangesAsync();
 
-        return new RefreshTokenResponse
-        {
-            AccessToken = newAccessToken,
-            RefreshToken = newRefreshToken.Token,
-            RefreshTokenExpirationTime = newRefreshToken.ExpirationTime
-        };
+        return new RefreshTokenResponse(newAccessToken, newRefreshToken.Token, newRefreshToken.ExpirationTime,
+            GetUserResponse(user));
     }
 
     private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
@@ -114,7 +88,7 @@ public class AccountService : IAccountService
             new(ClaimTypes.Email, user.Email!), new(ClaimTypes.NameIdentifier, user.Id)
         };
 
-        var userRoles = await _userManager.GetRolesAsync(user);
+        var userRoles = await userManager.GetRolesAsync(user);
 
         if (userRoles is { Count: > 0 })
         {
@@ -124,4 +98,6 @@ public class AccountService : IAccountService
 
         return authClaims;
     }
+
+    private static UserResponse GetUserResponse(User user) => new(user.Id, user.UserName, user.Email);
 }

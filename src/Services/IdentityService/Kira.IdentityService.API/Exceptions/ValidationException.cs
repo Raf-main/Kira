@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace Kira.IdentityService.API.Exceptions;
+﻿namespace Kira.IdentityService.API.Exceptions;
 
 public class ValidationException : Exception
 {
@@ -19,7 +17,6 @@ public class ValidationException : Exception
         ValidationErrors = validationErrors;
     }
 
-    protected ValidationException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     public IEnumerable<string> ValidationErrors { get; set; } = new List<string>();
 
     public override string Message => string.Join(Environment.NewLine, ValidationErrors);

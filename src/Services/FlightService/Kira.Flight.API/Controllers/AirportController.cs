@@ -7,10 +7,8 @@ namespace Kira.Flight.API.Controllers;
 
 [ApiController]
 [Route("[controller]s/[action]")]
-public class AirportController : BasicController
+public class AirportController(IMediator mediator) : BasicController(mediator)
 {
-    public AirportController(IMediator mediator) : base(mediator) { }
-
     public async Task<IActionResult> CreateAirport(CreateAirportCommand command)
     {
         var id = await Mediator.Send(command);

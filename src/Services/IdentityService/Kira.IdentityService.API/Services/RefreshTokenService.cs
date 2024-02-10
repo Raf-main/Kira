@@ -5,20 +5,14 @@ using Microsoft.Extensions.Options;
 
 namespace Kira.IdentityService.API.Services;
 
-public class RefreshTokenService : IRefreshTokenService
+public class RefreshTokenService(IDateTimeProvider dateTimeProvider, IOptions<JwtOptions> options)
+    : IRefreshTokenService
 {
-    private readonly IDateTimeProvider _dateTimeProvider;
-    private readonly JwtOptions _options;
-
-    public RefreshTokenService(IDateTimeProvider dateTimeProvider, IOptions<JwtOptions> options)
-    {
-        _dateTimeProvider = dateTimeProvider;
-        _options = options.Value;
-    }
+    private readonly JwtOptions _options = options.Value;
 
     public RefreshToken GenerateRefreshToken(string userId, DateTime? expirationTime = null)
     {
-        var expired = expirationTime ?? _dateTimeProvider.UtcNow().AddHours(_options.RefreshTokenExpirationTimeInHours);
+        var expired = expirationTime ?? dateTimeProvider.UtcNow().AddHours(_options.RefreshTokenExpirationTimeInHours);
 
         return new RefreshToken { ExpirationTime = expired, Token = Guid.NewGuid().ToString(), UserId = userId };
     }

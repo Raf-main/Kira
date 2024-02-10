@@ -4,20 +4,13 @@ using System.Text.Json;
 
 namespace Kira.IdentityService.API.Middleware;
 
-public class ExceptionHandlerMiddleware
+public class ExceptionHandlerMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ExceptionHandlerMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
     public async Task Invoke(HttpContext context)
     {
         try
         {
-            await _next(context);
+            await next(context);
         }
         catch (Exception error)
         {

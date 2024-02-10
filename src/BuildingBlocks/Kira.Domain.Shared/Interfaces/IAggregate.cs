@@ -2,4 +2,4 @@
 
 namespace Kira.Domain.Shared.Interfaces;
 
-public interface IAggregate<TKey> : IEntity<TKey>, IHasDomainEvent where TKey : struct { }
+public interface IAggregate<out TKey> : IEntity<TKey>, IHasDomainEvent where TKey : struct;

@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>preview</LangVersion>
     <UserSecretsId>562bdf3e-ff19-4f4c-8ccb-d0673016cf22</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     <DockerfileContext>..\..\..\..</DockerfileContext>
@@ -35,7 +36,6 @@
     <Folder Include="Exceptions\" />
     <Folder Include="Middleware\" />
     <Folder Include="Services\" />
-    <Folder Include="ViewModels\Response\" />
     <Folder Include="ViewModels\Request\" />
   </ItemGroup>
 

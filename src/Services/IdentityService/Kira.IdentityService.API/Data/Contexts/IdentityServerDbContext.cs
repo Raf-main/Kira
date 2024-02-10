@@ -4,8 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kira.IdentityService.API.Data.Contexts;
 
-public class IdentityServerDbContext : IdentityDbContext
+public class IdentityServerDbContext(DbContextOptions opts) : IdentityDbContext(opts)
 {
-    public IdentityServerDbContext(DbContextOptions opts) : base(opts) { }
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 }

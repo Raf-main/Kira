@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Kira.IdentityService.API.Data.Repositories;
 
-public class RefreshTokenRepository : GenericEfRepository<RefreshToken, int>, IRefreshTokenRepository
+public class RefreshTokenRepository(DbContext context)
+    : GenericEfRepository<RefreshToken, int>(context), IRefreshTokenRepository
 {
-    public RefreshTokenRepository(DbContext context) : base(context) { }
-
     public async Task<RefreshToken?> GetByTokenAsync(string token)
     {
         return await Table.FirstOrDefaultAsync(t => t.Token == token);

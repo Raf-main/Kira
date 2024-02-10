@@ -7,29 +7,26 @@ namespace Kira.IdentityService.API.Controllers;
 
 [Route("api/[controller]/[action]")]
 [ApiController]
-public class AccountController : ControllerBase
+public class AccountController(IAccountService accountService, ICookieService cookieService) : ControllerBase
 {
     private const string RefreshTokenCookieKey = "RefreshToken";
-    private readonly IAccountService _accountService;
-    private readonly ICookieService _cookieService;
-
-    public AccountController(IAccountService accountService, ICookieService cookieService)
-    {
-        _accountService = accountService;
-        _cookieService = cookieService;
-    }
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginRequest))]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Login([FromBody] LoginRequest loginRequest)
     {
-        var loginResponse = await _accountService.LoginAsync(loginRequest);
+        if (!ModelState.IsValid)
+        {
+            return UnprocessableEntity(ModelState);
+        }
 
-        _cookieService.SetResponseCookie(RefreshTokenCookieKey, loginResponse.RefreshToken,
+        var loginResponse = await accountService.LoginAsync(loginRequest);
+
+        cookieService.SetResponseCookie(RefreshTokenCookieKey, loginResponse.RefreshToken,
             loginResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
-        return Ok(loginResponse.RefreshToken);
+        return Ok(new { loginResponse.RefreshToken, loginResponse.User });
     }
 
     [HttpPost]
@@ -39,10 +36,10 @@ public class AccountController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState.Root.Errors.Select(e => e.ErrorMessage));
+            return UnprocessableEntity(ModelState);
         }
 
-        await _accountService.RegisterAsync(registrationRequest);
+        await accountService.RegisterAsync(registrationRequest);
 
         return Ok();
     }
@@ -53,19 +50,19 @@ public class AccountController : ControllerBase
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public async Task<IActionResult> RefreshAccessToken()
     {
-        if (_cookieService.TryGetRequestCookie(RefreshTokenCookieKey, out var refreshToken) ||
+        if (cookieService.TryGetRequestCookie(RefreshTokenCookieKey, out var refreshToken) ||
             string.IsNullOrEmpty(refreshToken))
         {
             return Unauthorized("Request doesn't contain refresh token");
         }
 
-        var refreshTokenRequest = new RefreshTokenRequest { RefreshToken = refreshToken };
+        var refreshTokenRequest = new RefreshTokenRequest(refreshToken);
 
-        var refreshTokenResponse = await _accountService.RefreshTokenAsync(refreshTokenRequest);
+        var refreshTokenResponse = await accountService.RefreshTokenAsync(refreshTokenRequest);
 
-        _cookieService.SetResponseCookie(RefreshTokenCookieKey, refreshTokenResponse.RefreshToken,
+        cookieService.SetResponseCookie(RefreshTokenCookieKey, refreshTokenResponse.RefreshToken,
             refreshTokenResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
-        return Ok(refreshTokenResponse.AccessToken);
+        return Ok(new { refreshTokenResponse.AccessToken, refreshTokenResponse.User });
     }
 }

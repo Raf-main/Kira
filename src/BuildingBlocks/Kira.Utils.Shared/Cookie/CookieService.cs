@@ -2,14 +2,9 @@
 
 namespace Kira.Utils.Shared.Cookie;
 
-public class CookieService : ICookieService
+public class CookieService(IHttpContextAccessor httpContextAccessor) : ICookieService
 {
-    private readonly HttpContext _httpContext;
-
-    public CookieService(IHttpContextAccessor httpContextAccessor)
-    {
-        _httpContext = httpContextAccessor.HttpContext;
-    }
+    private readonly HttpContext _httpContext = httpContextAccessor.HttpContext;
 
     public void SetResponseCookie(string key,
         string value,
