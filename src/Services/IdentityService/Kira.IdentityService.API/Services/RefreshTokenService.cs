@@ -1,4 +1,5 @@
 ﻿using Kira.IdentityService.API.Data.Models;
+using Kira.IdentityService.API.Services.Interfaces;
 using Kira.Security.Shared.Jwt.Options;
 using Kira.Utils.Shared.Time;
 using Microsoft.Extensions.Options;

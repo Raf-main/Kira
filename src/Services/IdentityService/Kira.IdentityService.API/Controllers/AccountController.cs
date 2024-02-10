@@ -1,4 +1,4 @@
-﻿using Kira.IdentityService.API.Services;
+﻿using Kira.IdentityService.API.Services.Interfaces;
 using Kira.IdentityService.API.ViewModels.Request;
 using Kira.Utils.Shared.Cookie;
 using Microsoft.AspNetCore.Mvc;

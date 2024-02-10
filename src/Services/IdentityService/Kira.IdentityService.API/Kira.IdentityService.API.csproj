@@ -32,10 +32,8 @@
     <Folder Include="Controllers\" />
     <Folder Include="Data\Models\" />
     <Folder Include="Data\Contexts\" />
-    <Folder Include="Data\Repositories\" />
     <Folder Include="Exceptions\" />
     <Folder Include="Middleware\" />
-    <Folder Include="Services\" />
     <Folder Include="ViewModels\Request\" />
   </ItemGroup>
 

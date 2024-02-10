@@ -1,7 +1,7 @@
 ﻿using Kira.IdentityService.API.ViewModels.Request;
 using Kira.IdentityService.API.ViewModels.Response;
 
-namespace Kira.IdentityService.API.Services;
+namespace Kira.IdentityService.API.Services.Interfaces;
 
 public interface IAccountService
 {

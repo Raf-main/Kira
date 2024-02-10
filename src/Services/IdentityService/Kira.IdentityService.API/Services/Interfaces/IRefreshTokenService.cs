@@ -1,6 +1,6 @@
 ﻿using Kira.IdentityService.API.Data.Models;
 
-namespace Kira.IdentityService.API.Services;
+namespace Kira.IdentityService.API.Services.Interfaces;
 
 public interface IRefreshTokenService
 {

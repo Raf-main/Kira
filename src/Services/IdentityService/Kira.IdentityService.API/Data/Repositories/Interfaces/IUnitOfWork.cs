@@ -1,4 +1,4 @@
-﻿namespace Kira.IdentityService.API.Data.Repositories;
+﻿namespace Kira.IdentityService.API.Data.Repositories.Interfaces;
 
 public interface IUnitOfWork
 {

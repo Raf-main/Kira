@@ -1,6 +1,7 @@
 ﻿using Kira.IdentityService.API.Data.Models;
-using Kira.IdentityService.API.Data.Repositories;
+using Kira.IdentityService.API.Data.Repositories.Interfaces;
 using Kira.IdentityService.API.Exceptions;
+using Kira.IdentityService.API.Services.Interfaces;
 using Kira.IdentityService.API.ViewModels.Request;
 using Kira.IdentityService.API.ViewModels.Response;
 using Kira.Security.Shared.Jwt.Services;
