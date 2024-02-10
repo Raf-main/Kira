@@ -8,8 +8,8 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-ENV PATH="/root/.dotnet/tools:${PATH}"
-RUN dotnet tool install --global dotnet-ef --version 8.0.1
+#ENV PATH="/root/.dotnet/tools:${PATH}"
+#RUN dotnet tool install --global dotnet-ef --version 8.0.1
 
 COPY ["src/Services/IdentityService/Kira.IdentityService.API/Kira.IdentityService.API.csproj", "src/Services/IdentityService/Kira.IdentityService.API/"]
 COPY ["src/BuildingBlocks/Kira.Security.Shared/Kira.Security.Shared.csproj", "src/BuildingBlocks/Kira.Security.Shared/"]
@@ -22,7 +22,6 @@ COPY . .
 WORKDIR "/src/src/Services/IdentityService/Kira.IdentityService.API"
 RUN dotnet build "./Kira.IdentityService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-CMD ["dotnet-ef", "database","update"]
 #RUN dotnet-ef database update
 
 FROM build AS publish

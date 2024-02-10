@@ -1,8 +1,12 @@
 using Kira.IdentityService.API.Data.Contexts;
 using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories;
+using Kira.IdentityService.API.Data.Repositories.Interfaces;
+using Kira.IdentityService.API.Data.Services;
+using Kira.IdentityService.API.Data.Services.Interfaces;
 using Kira.IdentityService.API.Middleware;
 using Kira.IdentityService.API.Services;
+using Kira.IdentityService.API.Services.Interfaces;
 using Kira.Security.Shared.Jwt.Extensions;
 using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
@@ -65,6 +69,12 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Identity API" });
 });
+
+// Migrations
+builder.Services.AddTransient<IDatabaseMigrationApplier, DatabaseMigrationApplier>();
+var serviceProvider = builder.Services.BuildServiceProvider();
+var migrationApplier = serviceProvider.GetRequiredService<IDatabaseMigrationApplier>();
+migrationApplier.ApplyMigrations();
 
 var app = builder.Build();
 
