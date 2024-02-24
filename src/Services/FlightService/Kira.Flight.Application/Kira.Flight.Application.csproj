@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -7,17 +7,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Behaviors\" />
+    <PackageReference Include="AutoMapper" Version="13.0.1"/>
+    <PackageReference Include="FluentValidation" Version="11.9.0"/>
+    <PackageReference Include="MediatR" Version="12.2.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FluentValidation" Version="11.9.0" />
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <ProjectReference Include="..\..\..\BuildingBlocks\Kira.Application.Shared\Kira.Application.Shared.csproj"/>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Light-Extensions\Light.Infrastructure.Extensions\Light.Infrastructure.Extensions.csproj"/>
+    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\BuildingBlocks\Light-Extensions\Light.Infrastructure.Extensions\Light.Infrastructure.Extensions.csproj" />
-    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
+    <Folder Include="Features\Airplanes\Commands\"/>
+    <Folder Include="Features\Airports\Commands\"/>
+    <Folder Include="Features\Seats\Commands\"/>
+    <Folder Include="Features\Seats\Queries\"/>
   </ItemGroup>
 
 </Project>

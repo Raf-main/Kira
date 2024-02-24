@@ -10,10 +10,13 @@
           "Port": 5086
         }
       ],
-      "SwaggerKey":  "identity",
+      "SwaggerKey": "identity",
       "UpstreamPathTemplate": "/api/Account/{everything}",
       "UpstreamScheme": "http",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
     }
   ],
   "SwaggerEndPoints": [

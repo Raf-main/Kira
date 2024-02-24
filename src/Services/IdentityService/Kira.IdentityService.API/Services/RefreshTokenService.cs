@@ -4,17 +4,17 @@ using Kira.Security.Shared.Jwt.Options;
 using Kira.Utils.Shared.Time;
 using Microsoft.Extensions.Options;
 
-namespace Kira.IdentityService.API.Services;
-
-public class RefreshTokenService(IDateTimeProvider dateTimeProvider, IOptions<JwtOptions> options)
-    : IRefreshTokenService
+namespace Kira.IdentityService.API.Services
 {
-    private readonly JwtOptions _options = options.Value;
-
-    public RefreshToken GenerateRefreshToken(string userId, DateTime? expirationTime = null)
+    public class RefreshTokenService(IDateTimeProvider dateTimeProvider, IOptions<JwtOptions> options) : IRefreshTokenService
     {
-        var expired = expirationTime ?? dateTimeProvider.UtcNow().AddHours(_options.RefreshTokenExpirationTimeInHours);
+        private readonly JwtOptions _options = options.Value;
 
-        return new RefreshToken { ExpirationTime = expired, Token = Guid.NewGuid().ToString(), UserId = userId };
+        public RefreshToken GenerateRefreshToken(string userId, DateTime? expirationTime = null)
+        {
+            var expired = expirationTime ?? dateTimeProvider.UtcNow().AddHours(_options.RefreshTokenExpirationTimeInHours);
+
+            return new RefreshToken { ExpirationTime = expired, Token = Guid.NewGuid().ToString(), UserId = userId };
+        }
     }
 }

@@ -2,8 +2,6 @@ using Kira.IdentityService.API.Data.Contexts;
 using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories;
 using Kira.IdentityService.API.Data.Repositories.Interfaces;
-using Kira.IdentityService.API.Data.Services;
-using Kira.IdentityService.API.Data.Services.Interfaces;
 using Kira.IdentityService.API.Middleware;
 using Kira.IdentityService.API.Services;
 using Kira.IdentityService.API.Services.Interfaces;
@@ -12,6 +10,8 @@ using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
 using Kira.Utils.Shared.Cookie;
 using Kira.Utils.Shared.Time;
+using Light.Infrastructure.EfCore.Services;
+using Light.Infrastructure.EfCore.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -33,6 +33,7 @@ var identityConnectionString = builder.Configuration.GetConnectionString("Identi
 
 // logging
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+
 // utils
 builder.Services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
 builder.Services.AddScoped<ICookieService, CookieService>();
@@ -40,10 +41,7 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 // db
 builder.Services.AddDbContext<IdentityServerDbContext>(options =>
 {
-    options.UseNpgsql(identityConnectionString, sqlOptions =>
-    {
-        sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null);
-    });
+    options.UseNpgsql(identityConnectionString, sqlOptions => { sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null); });
 });
 
 builder.Services.AddScoped<DbContext, IdentityServerDbContext>();
@@ -78,12 +76,16 @@ builder.Services.AddSwaggerGen(options =>
 
 var app = builder.Build();
 app.Services.CreateScope().ServiceProvider.GetRequiredService<IDatabaseMigrationApplier>().ApplyMigrations();
+
 // Configure the HTTP request pipeline.
 
 app.UseSwagger();
 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 
-app.UseCors(opts => { opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
+app.UseCors(opts =>
+{
+    opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+});
 
 app.UseCustomExceptionHandler();
 app.UseAuthentication();

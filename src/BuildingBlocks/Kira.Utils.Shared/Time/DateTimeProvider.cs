@@ -1,24 +1,25 @@
-﻿namespace Kira.Utils.Shared.Time;
-
-public class DateTimeProvider : IDateTimeProvider
+﻿namespace Kira.Utils.Shared.Time
 {
-    public DateTimeOffset OffsetNow()
+    public class DateTimeProvider : IDateTimeProvider
     {
-        return DateTimeOffset.UtcNow;
-    }
+        public DateTimeOffset OffsetNow()
+        {
+            return DateTimeOffset.UtcNow;
+        }
 
-    public DateTimeOffset OffsetUtcNow()
-    {
-        return DateTimeOffset.Now;
-    }
+        public DateTimeOffset OffsetUtcNow()
+        {
+            return DateTimeOffset.Now;
+        }
 
-    public DateTime Now()
-    {
-        return DateTime.Now;
-    }
+        public DateTime Now()
+        {
+            return DateTime.Now;
+        }
 
-    public DateTime UtcNow()
-    {
-        return DateTime.UtcNow;
+        public DateTime UtcNow()
+        {
+            return DateTime.UtcNow;
+        }
     }
 }

@@ -1,9 +1,10 @@
-﻿namespace Kira.IdentityService.API.Middleware;
-
-public static class ExceptionHandlerExtensions
+﻿namespace Kira.IdentityService.API.Middleware
 {
-    public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+    public static class ExceptionHandlerExtensions
     {
-        app.UseMiddleware<ExceptionHandlerMiddleware>();
+        public static void UseCustomExceptionHandler(this IApplicationBuilder app)
+        {
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+        }
     }
 }

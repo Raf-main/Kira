@@ -1,34 +1,35 @@
 ﻿using Kira.Domain.Shared.Exceptions;
 using Kira.Domain.Shared.Interfaces;
 
-namespace Kira.Domain.Shared.Abstractions;
-
-public abstract class Aggregate<TKey> : IAggregate<TKey> where TKey : struct
+namespace Kira.Domain.Shared.Abstractions
 {
-    protected IDictionary<Type, Action<object>> EventHandlers { get; set; } = new Dictionary<Type, Action<object>>();
-
-    public TKey Id { get; protected set; }
-    public ICollection<IDomainEvent> DomainEvents { get; protected set; } = new HashSet<IDomainEvent>();
-
-    public void AddDomainEvent(IDomainEvent domainEvent)
+    public abstract class Aggregate<TKey> : IAggregate<TKey> where TKey : struct
     {
-        DomainEvents.Add(domainEvent);
-    }
+        protected IDictionary<Type, Action<object>> EventHandlers { get; set; } = new Dictionary<Type, Action<object>>();
 
-    public void ClearDomainEvents()
-    {
-        DomainEvents.Clear();
-    }
+        public TKey Id { get; protected set; }
+        public ICollection<IDomainEvent> DomainEvents { get; protected set; } = new HashSet<IDomainEvent>();
 
-    public void Apply(IDomainEvent domainEvent)
-    {
-        var eventType = domainEvent.GetType();
-
-        if (!EventHandlers.ContainsKey(eventType))
+        public void AddDomainEvent(IDomainEvent domainEvent)
         {
-            throw new EventApplierIsNotRegisteredException(domainEvent);
+            DomainEvents.Add(domainEvent);
         }
 
-        EventHandlers[eventType](domainEvent);
+        public void ClearDomainEvents()
+        {
+            DomainEvents.Clear();
+        }
+
+        public void Apply(IDomainEvent domainEvent)
+        {
+            var eventType = domainEvent.GetType();
+
+            if (!EventHandlers.TryGetValue(eventType, out var handler))
+            {
+                throw new EventApplierIsNotRegisteredException(domainEvent);
+            }
+
+            handler(domainEvent);
+        }
     }
 }

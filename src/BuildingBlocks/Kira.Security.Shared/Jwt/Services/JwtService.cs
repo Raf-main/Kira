@@ -1,27 +1,28 @@
-﻿using Kira.Security.Shared.Jwt.Options;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Kira.Security.Shared.Jwt.Options;
 using Kira.Utils.Shared.Time;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 
-namespace Kira.Security.Shared.Jwt.Services;
-
-public class JwtService(IOptions<JwtOptions> jwtOptions, IDateTimeProvider dateTimeProvider) : IJwtService
+namespace Kira.Security.Shared.Jwt.Services
 {
-    private readonly JwtOptions _jwtOptions = jwtOptions.Value;
-
-    public string GenerateAccessToken(IEnumerable<Claim> claims, DateTime? expirationTime = null)
+    public class JwtService(IOptions<JwtOptions> jwtOptions, IDateTimeProvider dateTimeProvider) : IJwtService
     {
-        var secretKey = _jwtOptions.GetSymmetricSecurityKey();
-        var securityAlgorithm = _jwtOptions.Algorithm ?? SecurityAlgorithms.HmacSha256;
-        var signinCredentials = new SigningCredentials(secretKey, securityAlgorithm);
-        var expires = expirationTime ?? dateTimeProvider.UtcNow().AddMinutes(_jwtOptions.TokenExpirationTimeInMinutes);
+        private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
-        var tokenOptions = new JwtSecurityToken(null, null, claims, expires, signingCredentials: signinCredentials);
+        public string GenerateAccessToken(IEnumerable<Claim> claims, DateTime? expirationTime = null)
+        {
+            var secretKey = _jwtOptions.GetSymmetricSecurityKey();
+            var securityAlgorithm = _jwtOptions.Algorithm ?? SecurityAlgorithms.HmacSha256;
+            var signinCredentials = new SigningCredentials(secretKey, securityAlgorithm);
+            var expires = expirationTime ?? dateTimeProvider.UtcNow().AddMinutes(_jwtOptions.TokenExpirationTimeInMinutes);
 
-        var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+            var tokenOptions = new JwtSecurityToken(null, null, claims, expires, signingCredentials: signinCredentials);
 
-        return token;
+            var token = new JwtSecurityTokenHandler().WriteToken(tokenOptions);
+
+            return token;
+        }
     }
 }

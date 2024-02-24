@@ -2,15 +2,16 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Kira.Flight.Infrastructure.EfCore.Configurations;
-
-public class AirportEntityConfiguration : IEntityTypeConfiguration<Airport>
+namespace Kira.Flight.Infrastructure.EfCore.Configurations
 {
-    public void Configure(EntityTypeBuilder<Airport> builder)
+    public class AirportEntityConfiguration : IEntityTypeConfiguration<Airport>
     {
-        builder.HasKey(p => p.Id);
-        builder.Property(p => p.Id).ValueGeneratedNever();
-        builder.Property(p => p.Name).IsRequired();
-        builder.Ignore(p => p.DomainEvents);
+        public void Configure(EntityTypeBuilder<Airport> builder)
+        {
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.Id).ValueGeneratedNever();
+            builder.Property(p => p.Name).IsRequired().HasMaxLength(32);
+            builder.Ignore(p => p.DomainEvents);
+        }
     }
 }

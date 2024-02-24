@@ -7,7 +7,14 @@ services:
       - POSTGRES_PASSWORD=Admin1234!
       - POSTGRES_DB=IdentityDatabase
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_identity_data:/var/lib/postgresql/data/
+  flightdb:
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=Admin1234!
+      - POSTGRES_DB=FlightDatabase
+    volumes:
+      - postgres_flight_data:/var/lib/postgresql/data/
   pgadmin:
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@aspnetrun.com
@@ -15,6 +22,13 @@ services:
     volumes:
       - pgadmin_data:/root/.pgadmin
   identityservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+  flightservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://+:80
@@ -29,6 +43,7 @@ services:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 volumes:
-  postgres_data:
+  postgres_identity_data:
+  postgres_flight_data:
   pgadmin_data:
     

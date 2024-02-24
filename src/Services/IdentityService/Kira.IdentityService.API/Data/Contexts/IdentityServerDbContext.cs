@@ -2,9 +2,10 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kira.IdentityService.API.Data.Contexts;
-
-public class IdentityServerDbContext(DbContextOptions opts) : IdentityDbContext(opts)
+namespace Kira.IdentityService.API.Data.Contexts
 {
-    public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    public class IdentityServerDbContext(DbContextOptions opts) : IdentityDbContext(opts)
+    {
+        public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
+    }
 }

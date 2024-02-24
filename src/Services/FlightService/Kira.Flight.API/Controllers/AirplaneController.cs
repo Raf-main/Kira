@@ -1,18 +1,27 @@
 ﻿using Kira.API.Shared.Controllers;
-using Kira.Flight.Application.Commands.Airplanes.CreateAirplane;
+using Kira.Flight.Application.Features.Airplanes.Commands.CreateAirplane;
+using Kira.Flight.Application.Features.Airplanes.Queries.GetAirplane;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kira.Flight.API.Controllers;
-
-[ApiController]
-[Route("[controller]s/[action]")]
-public class AirplaneController(IMediator mediator) : BasicController(mediator)
+namespace Kira.Flight.API.Controllers
 {
-    public async Task<IActionResult> CreateAirplane(CreateAirplaneCommand command)
+    [ApiController]
+    [Route("[controller]s/[action]")]
+    public class AirplaneController(IMediator mediator) : BasicController(mediator)
     {
-        var id = await Mediator.Send(command);
+        public async Task<IActionResult> CreateAirplane(CreateAirplaneCommand command)
+        {
+            var id = await Mediator.Send(command);
 
-        return Ok(new { id });
+            return Ok(new { id });
+        }
+
+        public async Task<IActionResult> GetAirplane(GetAirplaneCommand command)
+        {
+            var airplane = await Mediator.Send(command);
+
+            return Ok(airplane);
+        }
     }
 }

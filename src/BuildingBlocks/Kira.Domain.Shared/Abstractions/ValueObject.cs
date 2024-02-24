@@ -1,39 +1,40 @@
-﻿namespace Kira.Domain.Shared.Abstractions;
-
-public abstract class ValueObject
+﻿namespace Kira.Domain.Shared.Abstractions
 {
-    // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
-    protected static bool EqualOperator(ValueObject? left, ValueObject? right)
+    public abstract class ValueObject
     {
-        if (left is null ^ right is null)
+        // Learn more: https://docs.microsoft.com/en-us/dotnet/standard/microservices-architecture/microservice-ddd-cqrs-patterns/implement-value-objects
+        protected static bool EqualOperator(ValueObject? left, ValueObject? right)
         {
-            return false;
+            if (left is null ^ right is null)
+            {
+                return false;
+            }
+
+            return left?.Equals(right) != false;
         }
 
-        return left?.Equals(right) != false;
-    }
-
-    protected static bool NotEqualOperator(ValueObject? left, ValueObject? right)
-    {
-        return !EqualOperator(left, right);
-    }
-
-    protected abstract IEnumerable<object?> GetEqualityComponents();
-
-    public override bool Equals(object? obj)
-    {
-        if (obj == null || obj.GetType() != GetType())
+        protected static bool NotEqualOperator(ValueObject? left, ValueObject? right)
         {
-            return false;
+            return !EqualOperator(left, right);
         }
 
-        var other = (ValueObject)obj;
+        protected abstract IEnumerable<object?> GetEqualityComponents();
 
-        return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
-    }
+        public override bool Equals(object? obj)
+        {
+            if (obj == null || obj.GetType() != GetType())
+            {
+                return false;
+            }
 
-    public override int GetHashCode()
-    {
-        return GetEqualityComponents().Select(x => x != null ? x.GetHashCode() : 0).Aggregate((x, y) => x ^ y);
+            var other = (ValueObject)obj;
+
+            return GetEqualityComponents().SequenceEqual(other.GetEqualityComponents());
+        }
+
+        public override int GetHashCode()
+        {
+            return GetEqualityComponents().Select(x => x != null ? x.GetHashCode() : 0).Aggregate((x, y) => x ^ y);
+        }
     }
 }

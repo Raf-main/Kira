@@ -1,16 +1,18 @@
 ﻿using Kira.Domain.Shared.Abstractions;
 
-namespace Kira.Flight.Domain.Entities;
-
-public class Airplane : Aggregate<Guid>
+namespace Kira.Flight.Domain.Entities
 {
-    public string Name { get; protected set; } = null!;
-    public string Model { get; protected set; } = null!;
-
-    public static Airplane Create(string name, string model)
+    public class Airplane : Aggregate<Guid>
     {
-        var airplane = new Airplane { Name = name, Model = model };
+        public string Name { get; protected set; } = null!;
 
-        return airplane;
+        public string Model { get; protected set; } = null!;
+
+        public static Airplane Create(string name, string model)
+        {
+            var airplane = new Airplane { Name = name, Model = model };
+
+            return airplane;
+        }
     }
 }

@@ -1,14 +1,15 @@
-﻿using Kira.IdentityService.API.Data.Services.Interfaces;
+﻿using Light.Infrastructure.EfCore.Services.Interfaces;
 
-namespace Kira.IdentityService.API.Extensions;
-
-public static class MigrationExtensions
+namespace Kira.IdentityService.API.Extensions
 {
-    public static void ApplyMigrations(this IApplicationBuilder app)
+    public static class MigrationExtensions
     {
-        using var scope = app.ApplicationServices.CreateScope();
+        public static void ApplyMigrations(this IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.CreateScope();
 
-        var migrationApplier = scope.ServiceProvider.GetRequiredService<IDatabaseMigrationApplier>();
-        migrationApplier.ApplyMigrations();
+            var migrationApplier = scope.ServiceProvider.GetRequiredService<IDatabaseMigrationApplier>();
+            migrationApplier.ApplyMigrations();
+        }
     }
 }

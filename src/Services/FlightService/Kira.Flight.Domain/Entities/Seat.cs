@@ -1,27 +1,28 @@
 ﻿using Kira.Domain.Shared.Abstractions;
 
-namespace Kira.Flight.Domain.Entities;
-
-public class Seat : Aggregate<Guid>
+namespace Kira.Flight.Domain.Entities
 {
-    public string SeatNumber { get; protected set; } = null!;
-    public Guid FlightId { get; protected set; }
-    public bool IsReserved { get; protected set; }
-
-    public static Seat Create(string seatNumber, Guid flightId, bool isReserved = false)
+    public class Seat : Aggregate<Guid>
     {
-        var seat = new Seat { SeatNumber = seatNumber, FlightId = flightId, IsReserved = isReserved };
+        public string SeatNumber { get; protected set; } = null!;
+        public Guid FlightId { get; protected set; }
+        public bool IsReserved { get; protected set; }
 
-        return seat;
-    }
+        public static Seat Create(string seatNumber, Guid flightId, bool isReserved = false)
+        {
+            var seat = new Seat { SeatNumber = seatNumber, FlightId = flightId, IsReserved = isReserved };
 
-    public void ReserveSeat()
-    {
-        IsReserved = true;
-    }
+            return seat;
+        }
 
-    public void ReleaseSeat()
-    {
-        IsReserved = false;
+        public void ReserveSeat()
+        {
+            IsReserved = true;
+        }
+
+        public void ReleaseSeat()
+        {
+            IsReserved = false;
+        }
     }
 }

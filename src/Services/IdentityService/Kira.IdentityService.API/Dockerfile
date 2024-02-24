@@ -1,15 +1,11 @@
-#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER app
+USER $APP_UID
 WORKDIR /app
 EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-#ENV PATH="/root/.dotnet/tools:${PATH}"
-#RUN dotnet tool install --global dotnet-ef --version 8.0.1
 
 COPY ["src/Services/IdentityService/Kira.IdentityService.API/Kira.IdentityService.API.csproj", "src/Services/IdentityService/Kira.IdentityService.API/"]
 COPY ["src/BuildingBlocks/Kira.Security.Shared/Kira.Security.Shared.csproj", "src/BuildingBlocks/Kira.Security.Shared/"]
@@ -21,8 +17,6 @@ RUN dotnet restore "./src/Services/IdentityService/Kira.IdentityService.API/./Ki
 COPY . .
 WORKDIR "/src/src/Services/IdentityService/Kira.IdentityService.API"
 RUN dotnet build "./Kira.IdentityService.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
-
-#RUN dotnet-ef database update
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release

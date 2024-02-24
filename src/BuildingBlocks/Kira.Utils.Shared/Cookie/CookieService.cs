@@ -1,25 +1,26 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace Kira.Utils.Shared.Cookie;
-
-public class CookieService(IHttpContextAccessor httpContextAccessor) : ICookieService
+namespace Kira.Utils.Shared.Cookie
 {
-    private readonly HttpContext _httpContext = httpContextAccessor.HttpContext;
-
-    public void SetResponseCookie(string key,
-        string value,
-        DateTime expirationDate,
-        bool httpOnly = false,
-        SameSiteMode sameSite = SameSiteMode.None
-    )
+    public class CookieService(IHttpContextAccessor httpContextAccessor) : ICookieService
     {
-        var cookieOptions = new CookieOptions { HttpOnly = httpOnly, SameSite = sameSite, Expires = expirationDate };
+        private readonly HttpContext _httpContext = httpContextAccessor.HttpContext;
 
-        _httpContext.Response.Cookies.Append(key, value, cookieOptions);
-    }
+        public void SetResponseCookie(string key,
+            string value,
+            DateTime expirationDate,
+            bool httpOnly = false,
+            SameSiteMode sameSite = SameSiteMode.None
+        )
+        {
+            var cookieOptions = new CookieOptions { HttpOnly = httpOnly, SameSite = sameSite, Expires = expirationDate };
 
-    public bool TryGetRequestCookie(string key, out string? value)
-    {
-        return _httpContext.Request.Cookies.TryGetValue(key, out value);
+            _httpContext.Response.Cookies.Append(key, value, cookieOptions);
+        }
+
+        public bool TryGetRequestCookie(string key, out string? value)
+        {
+            return _httpContext.Request.Cookies.TryGetValue(key, out value);
+        }
     }
 }

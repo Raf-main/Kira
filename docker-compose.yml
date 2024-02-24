@@ -5,13 +5,14 @@ services:
     image: postgres
     container_name: identitydb
     restart: always
-    #healthcheck:
-    #  test: ["CMD-SHELL", "pg_isready -U admin"]
-    #  interval: 20s
-    # timeout: 10s
-    # retries: 5
     ports:
-        - "5432:5432"
+      - "5432:5432"
+  flightdb:
+    image: postgres
+    container_name: flightdb
+    restart: always
+    ports:
+      - "5555:5432"
   identityservice:
     image: ${DOCKER_REGISTRY-}kiraidentityserviceapi
     container_name: identityservice
@@ -22,7 +23,16 @@ services:
       - "5086:80"
     depends_on:
       - identitydb
-      #  condition: service_healthy
+  flightservice:
+    image: ${DOCKER_REGISTRY-}kiraflightserviceapi
+    container_name: flightservice
+    build:
+      context: .
+      dockerfile: src/Services/FlightService/Kira.Flight.API/Dockerfile
+    ports:
+      - "5247:80"
+    depends_on:
+      - flightdb
   apigateway:
     image: ${DOCKER_REGISTRY-}kiraapigatewayocelot
     container_name: apigateway
@@ -38,5 +48,5 @@ services:
     container_name: pgadmin
     restart: always
     ports:
-        - "5050:80"
+      - "5050:80"
     

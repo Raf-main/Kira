@@ -1,15 +1,16 @@
 ﻿using Kira.Domain.Shared.Abstractions;
 
-namespace Kira.Flight.Domain.Entities;
-
-public class Airport : Aggregate<Guid>
+namespace Kira.Flight.Domain.Entities
 {
-    public string Name { get; protected set; } = null!;
-
-    public static Airport Create(string name)
+    public class Airport : Aggregate<Guid>
     {
-        var airport = new Airport { Name = name };
+        public string Name { get; protected set; } = null!;
 
-        return airport;
+        public static Airport Create(string name)
+        {
+            var airport = new Airport { Name = name };
+
+            return airport;
+        }
     }
 }

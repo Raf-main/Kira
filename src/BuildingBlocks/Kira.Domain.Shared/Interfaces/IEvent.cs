@@ -1,8 +1,9 @@
 ﻿using MediatR;
 
-namespace Kira.Domain.Shared.Interfaces;
-
-public interface IEvent : INotification
+namespace Kira.Domain.Shared.Interfaces
 {
-    public string EventType { get; }
+    public interface IEvent : INotification
+    {
+        public string EventType { get; }
+    }
 }

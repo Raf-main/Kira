@@ -1,33 +1,34 @@
-﻿using Kira.IdentityService.API.Exceptions;
-using System.Net;
+﻿using System.Net;
 using System.Text.Json;
+using Kira.IdentityService.API.Exceptions;
 
-namespace Kira.IdentityService.API.Middleware;
-
-public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
+namespace Kira.IdentityService.API.Middleware
 {
-    public async Task Invoke(HttpContext context)
+    public class ExceptionHandlerMiddleware(RequestDelegate next, ILogger<ExceptionHandlerMiddleware> logger)
     {
-        try
+        public async Task Invoke(HttpContext context)
         {
-            await next(context);
-        }
-        catch (Exception error)
-        {
-            var response = context.Response;
-            response.ContentType = "application/json";
-            
-            response.StatusCode = error switch
+            try
             {
-                ValidationException => (int)HttpStatusCode.BadRequest,
-                NotFoundException => (int)HttpStatusCode.NotFound,
-                _ => (int)HttpStatusCode.InternalServerError
-            };
+                await next(context);
+            }
+            catch (Exception error)
+            {
+                var response = context.Response;
+                response.ContentType = "application/json";
 
-            logger.LogError(error, "Middleware caught error");
+                response.StatusCode = error switch
+                {
+                    ValidationException => (int)HttpStatusCode.BadRequest,
+                    NotFoundException => (int)HttpStatusCode.NotFound,
+                    _ => (int)HttpStatusCode.InternalServerError
+                };
 
-            var result = JsonSerializer.Serialize(new { message = error.Message });
-            await response.WriteAsync(result);
+                logger.LogError(error, "Middleware caught error");
+
+                var result = JsonSerializer.Serialize(new { message = error.Message });
+                await response.WriteAsync(result);
+            }
         }
     }
 }

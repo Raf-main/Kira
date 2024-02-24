@@ -1,7 +1,8 @@
-﻿namespace Kira.IdentityService.API.Data.Repositories.Interfaces;
-
-public interface IUnitOfWork
+﻿namespace Kira.IdentityService.API.Data.Repositories.Interfaces
 {
-    IRefreshTokenRepository RefreshTokens { get; }
-    Task SaveChangesAsync();
+    public interface IUnitOfWork
+    {
+        IRefreshTokenRepository RefreshTokens { get; }
+        Task SaveChangesAsync();
+    }
 }

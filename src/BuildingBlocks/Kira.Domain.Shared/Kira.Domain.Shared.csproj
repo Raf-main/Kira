@@ -7,17 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Abstractions\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Exceptions\" />
+    <Folder Include="Abstractions\"/>
+    <Folder Include="Interfaces\"/>
+    <Folder Include="Exceptions\"/>
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MediatR" Version="12.2.0" />
+    <PackageReference Include="MediatR" Version="12.2.0"/>
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Light-Extensions\Light.Core.Extensions\Light.Core.Extensions.csproj" />
+    <ProjectReference Include="..\Light-Extensions\Light.Core.Extensions\Light.Core.Extensions.csproj"/>
   </ItemGroup>
 
 </Project>

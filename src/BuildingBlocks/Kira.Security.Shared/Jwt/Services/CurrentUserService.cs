@@ -1,31 +1,32 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.Security.Claims;
+﻿using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
-namespace Kira.Security.Shared.Jwt.Services;
-
-public class CurrentUserService(IHttpContextAccessor contextAccessor) : ICurrentUserService
+namespace Kira.Security.Shared.Jwt.Services
 {
-    private readonly HttpContext _httpContext = contextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(contextAccessor));
-
-    public ClaimsPrincipal GetUser()
+    public class CurrentUserService(IHttpContextAccessor contextAccessor) : ICurrentUserService
     {
-        return _httpContext.User;
-    }
+        private readonly HttpContext _httpContext = contextAccessor.HttpContext ?? throw new ArgumentNullException(nameof(contextAccessor));
 
-    public string GetId()
-    {
-        return GetUserClaim(ClaimTypes.NameIdentifier);
-    }
+        public ClaimsPrincipal GetUser()
+        {
+            return _httpContext.User;
+        }
 
-    public bool IsAuthenticated()
-    {
-        var isAuthenticated = _httpContext.User?.Identity?.IsAuthenticated;
+        public string GetId()
+        {
+            return GetUserClaim(ClaimTypes.NameIdentifier);
+        }
 
-        return isAuthenticated.HasValue && isAuthenticated.Value;
-    }
+        public bool IsAuthenticated()
+        {
+            var isAuthenticated = _httpContext.User.Identity?.IsAuthenticated;
 
-    public string GetUserClaim(string claimKey)
-    {
-        return _httpContext.User.Claims.First(claim => claim.Type == claimKey).ToString();
+            return isAuthenticated.HasValue && isAuthenticated.Value;
+        }
+
+        public string GetUserClaim(string claimKey)
+        {
+            return _httpContext.User.Claims.First(claim => claim.Type == claimKey).ToString();
+        }
     }
 }
