@@ -7,12 +7,16 @@ services:
     restart: always
     ports:
       - "5432:5432"
+    networks:
+      - identitynetwork
   flightdb:
     image: postgres
     container_name: flightdb
     restart: always
     ports:
       - "5555:5432"
+    networks:
+      - flightnetwork
   identityservice:
     image: ${DOCKER_REGISTRY-}kiraidentityserviceapi
     container_name: identityservice
@@ -21,6 +25,9 @@ services:
       dockerfile: src/Services/IdentityService/Kira.IdentityService.API/Dockerfile
     ports:
       - "5086:80"
+    networks:
+      - identitynetwork
+      - gatewaynetwork
     depends_on:
       - identitydb
   flightservice:
@@ -31,6 +38,9 @@ services:
       dockerfile: src/Services/FlightService/Kira.Flight.API/Dockerfile
     ports:
       - "5247:80"
+    networks:
+      - flightnetwork
+      - gatewaynetwork
     depends_on:
       - flightdb
   apigateway:
@@ -41,12 +51,24 @@ services:
       dockerfile: src/ApiGateways/Kira.ApiGateway.Ocelot/Dockerfile
     ports:
       - "5266:80"
+    networks:
+      - gatewaynetwork
+      - identitynetwork
+      - flightnetwork
     depends_on:
       - identityservice
+      - flightservice
   pgadmin:
     image: dpage/pgadmin4
     container_name: pgadmin
     restart: always
     ports:
       - "5050:80"
+networks:
+  identitynetwork:
+    driver: bridge
+  flightnetwork:
+    driver: bridge
+  gatewaynetwork:
+    driver: bridge
     

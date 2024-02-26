@@ -6,12 +6,81 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "host.docker.internal",
-          "Port": 5086
+          "Host": "identityservice",
+          "Port": 80
         }
       ],
       "SwaggerKey": "identity",
       "UpstreamPathTemplate": "/api/Account/{everything}",
+      "UpstreamScheme": "http",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    // Flight API
+    {
+      "DownstreamPathTemplate": "/api/Airplanes/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "flightservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "flight",
+      "UpstreamPathTemplate": "/api/Airplanes/{everything}",
+      "UpstreamScheme": "http",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Airports/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "flightservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "flight",
+      "UpstreamPathTemplate": "/api/Airports/{everything}",
+      "UpstreamScheme": "http",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Flights/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "flightservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "flight",
+      "UpstreamPathTemplate": "/api/Flights/{everything}",
+      "UpstreamScheme": "http",
+      "UpstreamHttpMethod": [
+        "GET",
+        "POST"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/Seats/{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "flightservice",
+          "Port": 80
+        }
+      ],
+      "SwaggerKey": "flight",
+      "UpstreamPathTemplate": "/api/Seats/{everything}",
       "UpstreamScheme": "http",
       "UpstreamHttpMethod": [
         "GET",
@@ -26,7 +95,17 @@
         {
           "Name": "Identity API",
           "Version": "v1",
-          "Url": "http://host.docker.internal:5086/swagger/v1/swagger.json"
+          "Url": "http://identityservice:80/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "flight",
+      "Config": [
+        {
+          "Name": "Flight API",
+          "Version": "v1",
+          "Url": "http://flightservice:80/swagger/v1/swagger.json"
         }
       ]
     }
