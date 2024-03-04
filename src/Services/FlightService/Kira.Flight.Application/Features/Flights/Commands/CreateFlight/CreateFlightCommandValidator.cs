@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Kira.Flight.Application.Features.Flights.CreateFlight
+namespace Kira.Flight.Application.Features.Flights.Commands.CreateFlight
 {
     public class CreateFlightCommandValidator : AbstractValidator<CreateFlightCommand>
     {

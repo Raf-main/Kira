@@ -8,7 +8,7 @@ namespace Kira.Flight.Domain.Entities
 
         public static Airport Create(string name)
         {
-            var airport = new Airport { Name = name };
+            var airport = new Airport { Id = Guid.NewGuid(), Name = name };
 
             return airport;
         }

@@ -1,4 +1,5 @@
 ﻿using Kira.Flight.Domain.Entities;
+using Kira.Flight.Infrastructure.Interfaces;
 using Light.Infrastructure.Extensions.Repositories;
 using MediatR;
 
@@ -6,16 +7,18 @@ namespace Kira.Flight.Application.Features.Seats.Commands.ReserveSeat
 {
     public class ReserveSeatCommandHandler : IRequestHandler<ReserveSeatCommand, Unit>
     {
-        private readonly IAsyncGenericRepository<Seat, Guid> _repository;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncReadRepository<Seat, Guid> _seatReadRepository;
 
-        public ReserveSeatCommandHandler(IAsyncGenericRepository<Seat, Guid> repository)
+        public ReserveSeatCommandHandler(IUnitOfWork unitOfWork, IAsyncReadRepository<Seat,Guid> seatReadRepository)
         {
-            _repository = repository;
+            _unitOfWork = unitOfWork;
+            _seatReadRepository = seatReadRepository;
         }
 
         public async Task<Unit> Handle(ReserveSeatCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _repository.GetByKeyAsync(request.SeatId, cancellationToken);
+            var entity = await _seatReadRepository.GetByKeyAsync(request.SeatId, cancellationToken);
 
             if (entity == null)
             {
@@ -23,7 +26,8 @@ namespace Kira.Flight.Application.Features.Seats.Commands.ReserveSeat
             }
 
             entity.ReserveSeat();
-            await _repository.UpdateAsync(entity, cancellationToken);
+            await _unitOfWork.SeatWriteRepository.UpdateAsync(entity, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

@@ -1,22 +1,23 @@
 ﻿using Kira.Flight.Domain.Entities;
-using Light.Infrastructure.Extensions.Repositories;
+using Kira.Flight.Infrastructure.Interfaces;
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airports.Commands.CreateAirport
 {
     public class CreateAirportCommandHandler : IRequestHandler<CreateAirportCommand, Guid>
     {
-        private readonly IAsyncGenericRepository<Airport, Guid> _airportRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateAirportCommandHandler(IAsyncGenericRepository<Airport, Guid> airportRepository)
+        public CreateAirportCommandHandler(IUnitOfWork unitOfWork)
         {
-            _airportRepository = airportRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Guid> Handle(CreateAirportCommand request, CancellationToken cancellationToken)
         {
             var airport = Airport.Create(request.Name);
-            await _airportRepository.AddAsync(airport, cancellationToken);
+            await _unitOfWork.AirportWriteRepository.AddAsync(airport, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return airport.Id;
         }

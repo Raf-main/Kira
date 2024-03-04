@@ -1,4 +1,5 @@
 ﻿using Kira.Flight.Domain.Entities;
+using Kira.Flight.Infrastructure.Interfaces;
 using Light.Infrastructure.Extensions.Repositories;
 using MediatR;
 
@@ -6,17 +7,18 @@ namespace Kira.Flight.Application.Features.Airplanes.Commands.CreateAirplane
 {
     public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, Guid>
     {
-        private readonly IAsyncGenericRepository<Airplane, Guid> _genericRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public CreateAirplaneCommandHandler(IAsyncGenericRepository<Airplane, Guid> genericRepository)
+        public CreateAirplaneCommandHandler(IUnitOfWork unitOfWork)
         {
-            _genericRepository = genericRepository;
+            _unitOfWork = unitOfWork;
         }
 
         public async Task<Guid> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
         {
             var airplane = Airplane.Create(request.Name, request.Model);
-            await _genericRepository.AddAsync(airplane, cancellationToken);
+            await _unitOfWork.AirplaneWriteRepository.AddAsync(airplane, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return airplane.Id;
         }

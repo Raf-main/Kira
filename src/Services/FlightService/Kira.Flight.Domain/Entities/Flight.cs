@@ -14,6 +14,7 @@ namespace Kira.Flight.Domain.Entities
         {
             var flight = new Flight
             {
+                Id = Guid.NewGuid(),
                 AirplaneId = planeId,
                 FromAirportId = fromAirportId,
                 ToAirportId = toAirportId,

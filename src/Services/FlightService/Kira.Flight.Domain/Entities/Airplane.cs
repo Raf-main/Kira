@@ -10,7 +10,7 @@ namespace Kira.Flight.Domain.Entities
 
         public static Airplane Create(string name, string model)
         {
-            var airplane = new Airplane { Name = name, Model = model };
+            var airplane = new Airplane { Id = Guid.NewGuid(), Name = name, Model = model };
 
             return airplane;
         }

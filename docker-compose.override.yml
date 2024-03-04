@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+  # db
   identitydb:
     environment:
       - POSTGRES_USER=admin
@@ -21,6 +22,14 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=admin1234
     volumes:
       - pgadmin_data:/root/.pgadmin
+  # cache
+  redis:
+    volumes:
+      - /path/to/local/data:/root/redis
+      - /path/to/local/redis.conf:/usr/local/etc/redis/redis.conf
+    environment:
+      - REDIS_PORT=6379
+  # service
   identityservice:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -46,4 +55,3 @@ volumes:
   postgres_identity_data:
   postgres_flight_data:
   pgadmin_data:
-    

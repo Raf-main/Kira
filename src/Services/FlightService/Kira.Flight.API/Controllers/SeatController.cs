@@ -7,9 +7,10 @@ using Microsoft.AspNetCore.Mvc;
 namespace Kira.Flight.API.Controllers
 {
     [ApiController]
-    [Route("[controller]s/[action]")]
+    [Route("api/[controller]s")]
     public class SeatController(IMediator mediator) : BasicController(mediator)
     {
+        [HttpPost]
         public async Task<IActionResult> CreateSeat(CreateSeatCommand command)
         {
             var id = await Mediator.Send(command);
@@ -17,8 +18,10 @@ namespace Kira.Flight.API.Controllers
             return Ok(new { id });
         }
 
-        public async Task<IActionResult> ReserveSeat(ReserveSeatCommand command)
+        [HttpPost("{id:guid}/reserve")]
+        public async Task<IActionResult> ReserveSeat(Guid id)
         {
+            var command = new ReserveSeatCommand(id);
             await Mediator.Send(command);
 
             return Ok();

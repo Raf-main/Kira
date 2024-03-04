@@ -1,20 +1,14 @@
-﻿using Kira.Flight.Application.Features.Airports.Dto;
+﻿using Kira.Application.Shared.Queries;
+using Kira.Flight.Application.Features.Airports.Dto;
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airports.Queries.GetAirport
 {
-    public record GetAirportCommand : IRequest<AirportDto>
+    public record GetAirportCommand(Guid Id) : IRequest<AirportDto>, ICacheableQuery<GetAirportCommand>
     {
-        public GetAirportCommand(Guid Id)
+        public string GetCacheKey()
         {
-            this.Id = Id;
-        }
-
-        public Guid Id { get; init; }
-
-        public void Deconstruct(out Guid Id)
-        {
-            Id = this.Id;
+            throw new NotImplementedException();
         }
     }
 }

@@ -10,7 +10,13 @@ namespace Kira.Flight.Domain.Entities
 
         public static Seat Create(string seatNumber, Guid flightId, bool isReserved = false)
         {
-            var seat = new Seat { SeatNumber = seatNumber, FlightId = flightId, IsReserved = isReserved };
+            var seat = new Seat
+            {
+                Id = Guid.NewGuid(),
+                SeatNumber = seatNumber,
+                FlightId = flightId,
+                IsReserved = isReserved
+            };
 
             return seat;
         }

@@ -1,3 +1,4 @@
+using Kira.Flight.API.Middleware;
 using Kira.Flight.Extensions;
 using Light.Infrastructure.EfCore.Services.Interfaces;
 
@@ -14,6 +15,7 @@ app.Services.CreateScope().ServiceProvider.GetRequiredService<IDatabaseMigration
 
 app.UseSwagger();
 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
+app.UseCustomExceptionHandler();
 
 app.UseCors(opts =>
 {

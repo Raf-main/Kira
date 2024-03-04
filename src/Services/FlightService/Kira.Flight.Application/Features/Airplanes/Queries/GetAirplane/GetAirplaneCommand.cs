@@ -1,20 +1,14 @@
-﻿using Kira.Flight.Application.Features.Airplanes.Dto;
+﻿using Kira.Application.Shared.Queries;
+using Kira.Flight.Application.Features.Airplanes.Dto;
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airplanes.Queries.GetAirplane
 {
-    public record GetAirplaneCommand : IRequest<AirplaneDto>
+    public record GetAirplaneCommand(Guid Id) : IRequest<AirplaneDto>, ICacheableQuery<GetAirplaneCommand>
     {
-        public GetAirplaneCommand(Guid Id)
+        public string GetCacheKey()
         {
-            this.Id = Id;
-        }
-
-        public Guid Id { get; init; }
-
-        public void Deconstruct(out Guid Id)
-        {
-            Id = this.Id;
+            throw new NotImplementedException();
         }
     }
 }

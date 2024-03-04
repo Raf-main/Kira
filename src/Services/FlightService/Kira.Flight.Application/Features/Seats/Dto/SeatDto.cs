@@ -1,4 +1,4 @@
 ﻿namespace Kira.Flight.Application.Features.Seats.Dto
 {
-    public record SeatDto;
+    public record SeatDto(string SeatNumber, bool IsReserved);
 }

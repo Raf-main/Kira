@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+  # db
   identitydb:
     image: postgres
     container_name: identitydb
@@ -17,6 +18,24 @@ services:
       - "5555:5432"
     networks:
       - flightnetwork
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    restart: always
+    ports:
+      - "5050:80"
+    networks:
+      - cachenetwork
+  # cache
+  redis:
+    image: redis:latest
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    networks: 
+      - cachenetwork
+  # service
   identityservice:
     image: ${DOCKER_REGISTRY-}kiraidentityserviceapi
     container_name: identityservice
@@ -41,8 +60,10 @@ services:
     networks:
       - flightnetwork
       - gatewaynetwork
+      - cachenetwork
     depends_on:
       - flightdb
+      - redis
   apigateway:
     image: ${DOCKER_REGISTRY-}kiraapigatewayocelot
     container_name: apigateway
@@ -58,17 +79,12 @@ services:
     depends_on:
       - identityservice
       - flightservice
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgadmin
-    restart: always
-    ports:
-      - "5050:80"
 networks:
   identitynetwork:
     driver: bridge
   flightnetwork:
     driver: bridge
+  cachenetwork:
+    driver: bridge
   gatewaynetwork:
     driver: bridge
-    

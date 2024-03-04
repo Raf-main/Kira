@@ -2,11 +2,11 @@
 using Kira.Flight.Application.Features.Seats.Dto;
 using Kira.Flight.Domain.Entities;
 
-namespace Kira.Flight.Application.Mappers
+namespace Kira.Flight.Application.Features.Seats.Mappings
 {
     public class SeatMapper : Profile
     {
-        private SeatMapper()
+        public SeatMapper()
         {
             CreateMap<Seat, SeatDto>();
         }
