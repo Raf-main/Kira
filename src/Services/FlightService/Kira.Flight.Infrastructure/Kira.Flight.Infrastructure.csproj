@@ -7,12 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="EfCore\Contexts\"/>
+    <Folder Include="EfCore\Contexts\" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Kira.Flight.Application\Kira.Flight.Application.csproj"/>
-    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj"/>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Light-Extensions\Light.Infrastructure.EfCore.SqlServer\Light.Infrastructure.EfCore.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Application\Kira.Flight.Application.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Infrastructure.Interfaces\Kira.Flight.Infrastructure.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +22,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2"/>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.2" />
   </ItemGroup>
 
 </Project>

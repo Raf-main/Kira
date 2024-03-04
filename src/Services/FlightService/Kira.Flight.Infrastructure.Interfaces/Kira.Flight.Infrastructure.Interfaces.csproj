@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\Light-Extensions\Light.Infrastructure.Extensions\Light.Infrastructure.Extensions.csproj" />
+    <ProjectReference Include="..\Kira.Flight.Domain\Kira.Flight.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
