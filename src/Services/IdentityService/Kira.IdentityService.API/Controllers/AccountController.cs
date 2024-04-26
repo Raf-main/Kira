@@ -1,7 +1,6 @@
 ﻿using Kira.IdentityService.API.Services.Interfaces;
 using Kira.IdentityService.API.ViewModels.Request;
 using Kira.Utils.Shared.Cookie;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kira.IdentityService.API.Controllers;
@@ -27,7 +26,11 @@ public class AccountController(IAccountService accountService, ICookieService co
         cookieService.SetResponseCookie(RefreshTokenCookieKey, loginResponse.RefreshToken,
             loginResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
-        return Ok(new { loginResponse.AccessToken, loginResponse.User });
+        return Ok(new
+        {
+            loginResponse.AccessToken,
+            loginResponse.User
+        });
     }
 
     [HttpPost]
@@ -64,6 +67,10 @@ public class AccountController(IAccountService accountService, ICookieService co
         cookieService.SetResponseCookie(RefreshTokenCookieKey, refreshTokenResponse.RefreshToken,
             refreshTokenResponse.RefreshTokenExpirationTime, true, SameSiteMode.Strict);
 
-        return Ok(new { refreshTokenResponse.AccessToken, refreshTokenResponse.User });
+        return Ok(new
+        {
+            refreshTokenResponse.AccessToken,
+            refreshTokenResponse.User
+        });
     }
 }

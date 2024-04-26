@@ -1,19 +1,17 @@
 ﻿using Kira.API.Shared.Controllers;
 using Kira.Flight.Application.Features.Seats.Commands.CreateSeat;
 using Kira.Flight.Application.Features.Seats.Commands.ReserveSeat;
-
 using MediatR;
-
 using Microsoft.AspNetCore.Mvc;
 
 namespace Kira.Flight.API.Controllers;
 
 [ApiController]
-[Route("api/[controller]s")]
+[Route("api/seats")]
 public class SeatController(IMediator mediator) : BasicController(mediator)
 {
     [HttpPost]
-    public async Task<IActionResult> CreateSeat(CreateSeatCommand command)
+    public async Task<IActionResult> CreateSeat([FromBody] CreateSeatCommand command)
     {
         var id = await Mediator.Send(command);
 

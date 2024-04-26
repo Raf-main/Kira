@@ -1,9 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-
 using Kira.Security.Shared.Jwt.Options;
 using Kira.Utils.Shared.Time;
-
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 

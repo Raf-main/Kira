@@ -1,3 +1,11 @@
-﻿namespace Kira.Flight.Application.Features.Airplanes.Dto;
+﻿using Kira.Application.Shared.Queries;
 
-public record AirplaneDto(Guid Id, string Name, string Model);
+namespace Kira.Flight.Application.Features.Airplanes.Dto;
+
+public record AirplaneDto(Guid Id, string Name, string Model) : ICacheableQuery<AirplaneDto>
+{
+    public string GetCacheKey()
+    {
+        return $"{AirplaneCacheKeys.BaseKey}_{Id}";
+    }
+}

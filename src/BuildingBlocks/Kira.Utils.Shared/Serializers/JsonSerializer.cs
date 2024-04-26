@@ -1,5 +1,4 @@
 ﻿using System.Text;
-
 using Newtonsoft.Json;
 
 namespace Kira.Utils.Shared.Serializers;

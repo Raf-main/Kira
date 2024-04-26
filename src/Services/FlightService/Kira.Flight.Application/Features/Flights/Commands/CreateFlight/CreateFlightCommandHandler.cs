@@ -1,5 +1,4 @@
 ﻿using Kira.Flight.Infrastructure.Interfaces;
-
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Flights.Commands.CreateFlight;

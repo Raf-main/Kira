@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-
 using Kira.Flight.Application.Features.Seats.Dto;
 using Kira.Flight.Domain.Entities;
 

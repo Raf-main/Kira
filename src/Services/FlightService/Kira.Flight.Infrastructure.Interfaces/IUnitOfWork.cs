@@ -1,5 +1,4 @@
 ﻿using Kira.Flight.Domain.Entities;
-
 using Light.Infrastructure.Extensions.Repositories;
 
 namespace Kira.Flight.Infrastructure.Interfaces;

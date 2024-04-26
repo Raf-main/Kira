@@ -1,5 +1,4 @@
 ﻿using Kira.Security.Shared.Jwt.Options;
-
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;

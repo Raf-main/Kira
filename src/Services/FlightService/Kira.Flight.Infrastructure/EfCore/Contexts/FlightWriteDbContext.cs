@@ -1,7 +1,5 @@
 ﻿using System.Reflection;
-
 using Kira.Flight.Domain.Entities;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Kira.Flight.Infrastructure.EfCore.Contexts;

@@ -1,13 +1,10 @@
 ﻿using System.Reflection;
-
 using FluentValidation;
-
 using Kira.Application.Shared.Validators;
 using Kira.Flight.Application.Behaviors;
 using Kira.Flight.Application.Features.Airplanes.Commands.CreateAirplane;
 using Kira.Flight.Application.Features.Airplanes.Mappings;
 using Kira.Utils.Shared.Serializers;
-
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

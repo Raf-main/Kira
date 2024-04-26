@@ -1,7 +1,5 @@
 ﻿using System;
-
 using Microsoft.EntityFrameworkCore.Migrations;
-
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
@@ -14,35 +12,33 @@ public partial class init : Migration
     /// <inheritdoc />
     protected override void Up(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.CreateTable("AspNetRoles",
-            table => new
-            {
-                Id = table.Column<string>("text", nullable: false),
-                Name = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                NormalizedName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                ConcurrencyStamp = table.Column<string>("text", nullable: true)
-            }, constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); });
+        migrationBuilder.CreateTable("AspNetRoles", table => new
+        {
+            Id = table.Column<string>("text", nullable: false),
+            Name = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            NormalizedName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            ConcurrencyStamp = table.Column<string>("text", nullable: true)
+        }, constraints: table => { table.PrimaryKey("PK_AspNetRoles", x => x.Id); });
 
-        migrationBuilder.CreateTable("AspNetUsers",
-            table => new
-            {
-                Id = table.Column<string>("text", nullable: false),
-                Discriminator = table.Column<string>("character varying(13)", maxLength: 13, nullable: false),
-                UserName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                NormalizedUserName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                Email = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                NormalizedEmail = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
-                EmailConfirmed = table.Column<bool>("boolean", nullable: false),
-                PasswordHash = table.Column<string>("text", nullable: true),
-                SecurityStamp = table.Column<string>("text", nullable: true),
-                ConcurrencyStamp = table.Column<string>("text", nullable: true),
-                PhoneNumber = table.Column<string>("text", nullable: true),
-                PhoneNumberConfirmed = table.Column<bool>("boolean", nullable: false),
-                TwoFactorEnabled = table.Column<bool>("boolean", nullable: false),
-                LockoutEnd = table.Column<DateTimeOffset>("timestamp with time zone", nullable: true),
-                LockoutEnabled = table.Column<bool>("boolean", nullable: false),
-                AccessFailedCount = table.Column<int>("integer", nullable: false)
-            }, constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); });
+        migrationBuilder.CreateTable("AspNetUsers", table => new
+        {
+            Id = table.Column<string>("text", nullable: false),
+            Discriminator = table.Column<string>("character varying(13)", maxLength: 13, nullable: false),
+            UserName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            NormalizedUserName = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            Email = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            NormalizedEmail = table.Column<string>("character varying(256)", maxLength: 256, nullable: true),
+            EmailConfirmed = table.Column<bool>("boolean", nullable: false),
+            PasswordHash = table.Column<string>("text", nullable: true),
+            SecurityStamp = table.Column<string>("text", nullable: true),
+            ConcurrencyStamp = table.Column<string>("text", nullable: true),
+            PhoneNumber = table.Column<string>("text", nullable: true),
+            PhoneNumberConfirmed = table.Column<bool>("boolean", nullable: false),
+            TwoFactorEnabled = table.Column<bool>("boolean", nullable: false),
+            LockoutEnd = table.Column<DateTimeOffset>("timestamp with time zone", nullable: true),
+            LockoutEnabled = table.Column<bool>("boolean", nullable: false),
+            AccessFailedCount = table.Column<int>("integer", nullable: false)
+        }, constraints: table => { table.PrimaryKey("PK_AspNetUsers", x => x.Id); });
 
         migrationBuilder.CreateTable("AspNetRoleClaims",
             table => new
@@ -87,7 +83,11 @@ public partial class init : Migration
                 UserId = table.Column<string>("text", nullable: false)
             }, constraints: table =>
             {
-                table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                table.PrimaryKey("PK_AspNetUserLogins", x => new
+                {
+                    x.LoginProvider,
+                    x.ProviderKey
+                });
 
                 table.ForeignKey("FK_AspNetUserLogins_AspNetUsers_UserId", x => x.UserId, "AspNetUsers", "Id",
                     onDelete: ReferentialAction.Cascade);
@@ -100,7 +100,11 @@ public partial class init : Migration
                 RoleId = table.Column<string>("text", nullable: false)
             }, constraints: table =>
             {
-                table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
+                table.PrimaryKey("PK_AspNetUserRoles", x => new
+                {
+                    x.UserId,
+                    x.RoleId
+                });
 
                 table.ForeignKey("FK_AspNetUserRoles_AspNetRoles_RoleId", x => x.RoleId, "AspNetRoles", "Id",
                     onDelete: ReferentialAction.Cascade);

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-
 using Kira.Flight.Application.Features.Airports.Dto;
 using Kira.Flight.Domain.Entities;
 

@@ -1,6 +1,5 @@
 ﻿using Kira.IdentityService.API.Data.Contexts;
 using Kira.IdentityService.API.Data.Repositories.Interfaces;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Kira.IdentityService.API.Data.Repositories;

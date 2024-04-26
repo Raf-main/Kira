@@ -1,8 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
-
 using FluentValidation;
-
 using Kira.Flight.Application.Exceptions;
 
 namespace Kira.Flight.API.Middleware;

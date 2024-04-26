@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
-
 using Kira.Flight.Application.Features.Airports.Dto;
 using Kira.Flight.Domain.Entities;
-
 using Light.Infrastructure.Extensions.Repositories;
-
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airports.Queries.GetAirport;

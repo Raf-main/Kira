@@ -1,8 +1,6 @@
 ﻿using Kira.Flight.Domain.Entities;
 using Kira.Flight.Infrastructure.Interfaces;
-
 using Light.Infrastructure.Extensions.Repositories;
-
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Seats.Commands.ReserveSeat;

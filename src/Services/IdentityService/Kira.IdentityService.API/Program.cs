@@ -10,14 +10,11 @@ using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
 using Kira.Utils.Shared.Cookie;
 using Kira.Utils.Shared.Time;
-
 using Light.Infrastructure.EfCore.Services;
 using Light.Infrastructure.EfCore.Services.Interfaces;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
-
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -75,7 +72,11 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Identity API" });
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "Identity API"
+    });
 });
 
 var app = builder.Build();

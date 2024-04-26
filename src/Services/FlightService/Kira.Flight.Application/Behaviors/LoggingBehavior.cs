@@ -1,5 +1,4 @@
 ﻿using MediatR;
-
 using Microsoft.Extensions.Logging;
 
 namespace Kira.Flight.Application.Behaviors;

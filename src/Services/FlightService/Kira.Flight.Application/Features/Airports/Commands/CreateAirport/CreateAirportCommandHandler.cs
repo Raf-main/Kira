@@ -1,6 +1,5 @@
 ﻿using Kira.Flight.Domain.Entities;
 using Kira.Flight.Infrastructure.Interfaces;
-
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airports.Commands.CreateAirport;

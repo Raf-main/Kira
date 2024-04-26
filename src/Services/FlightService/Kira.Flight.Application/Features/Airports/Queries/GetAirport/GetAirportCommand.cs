@@ -1,6 +1,5 @@
 ﻿using Kira.Application.Shared.Queries;
 using Kira.Flight.Application.Features.Airports.Dto;
-
 using MediatR;
 
 namespace Kira.Flight.Application.Features.Airports.Queries.GetAirport;

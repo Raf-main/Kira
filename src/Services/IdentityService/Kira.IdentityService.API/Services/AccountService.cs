@@ -1,5 +1,4 @@
 ﻿using System.Security.Claims;
-
 using Kira.IdentityService.API.Data.Models;
 using Kira.IdentityService.API.Data.Repositories.Interfaces;
 using Kira.IdentityService.API.Exceptions;
@@ -7,10 +6,8 @@ using Kira.IdentityService.API.Services.Interfaces;
 using Kira.IdentityService.API.ViewModels.Request;
 using Kira.IdentityService.API.ViewModels.Response;
 using Kira.Security.Shared.Jwt.Services;
-
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
-
 using LoginRequest = Kira.IdentityService.API.ViewModels.Request.LoginRequest;
 
 namespace Kira.IdentityService.API.Services;
@@ -44,7 +41,11 @@ public class AccountService(
 
     public async Task RegisterAsync(RegistrationRequest registrationRequest)
     {
-        var user = new User { UserName = registrationRequest.UserName, Email = registrationRequest.Email };
+        var user = new User
+        {
+            UserName = registrationRequest.UserName,
+            Email = registrationRequest.Email
+        };
 
         var result = await userManager.CreateAsync(user, registrationRequest.Password);
 
@@ -89,8 +90,11 @@ public class AccountService(
 
     private async Task<IEnumerable<Claim>> GetClaimsAsync(User user)
     {
-        var authClaims =
-            new List<Claim> { new(ClaimTypes.Email, user.Email!), new(ClaimTypes.NameIdentifier, user.Id) };
+        var authClaims = new List<Claim>
+        {
+            new(ClaimTypes.Email, user.Email!),
+            new(ClaimTypes.NameIdentifier, user.Id)
+        };
 
         var userRoles = await userManager.GetRolesAsync(user);
 

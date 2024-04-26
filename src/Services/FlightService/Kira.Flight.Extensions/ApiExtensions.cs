@@ -13,7 +13,11 @@ public static class ApiExtensions
 
         services.AddSwaggerGen(options =>
         {
-            options.SwaggerDoc("v1", new OpenApiInfo { Version = "v1", Title = "Flight API" });
+            options.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Version = "v1",
+                Title = "Flight API"
+            });
         });
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Kira.IdentityService.API.Data.Models;
-
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-
 using Light.Core.Extensions.Entities;
 
 namespace Kira.IdentityService.API.Data.Models;

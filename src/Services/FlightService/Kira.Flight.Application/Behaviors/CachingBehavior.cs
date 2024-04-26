@@ -1,8 +1,6 @@
 ﻿using Kira.Application.Shared.Queries;
 using Kira.Utils.Shared.Serializers;
-
 using MediatR;
-
 using Microsoft.Extensions.Caching.Distributed;
 
 namespace Kira.Flight.Application.Behaviors;

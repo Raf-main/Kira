@@ -1,9 +1,7 @@
 ﻿using Kira.Flight.Domain.Entities;
 using Kira.Flight.Infrastructure.Interfaces;
-
 using Light.Infrastructure.EfCore.Repositories;
 using Light.Infrastructure.Extensions.Repositories;
-
 using Microsoft.EntityFrameworkCore;
 
 namespace Kira.Flight.Infrastructure.EfCore.Repositories;

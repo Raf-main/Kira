@@ -1,5 +1,4 @@
 ﻿using Kira.IdentityService.API.Data.Models;
-
 using Light.Infrastructure.Extensions.Repositories;
 
 namespace Kira.IdentityService.API.Data.Repositories.Interfaces;

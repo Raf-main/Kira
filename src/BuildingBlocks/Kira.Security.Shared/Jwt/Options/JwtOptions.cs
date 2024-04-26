@@ -1,5 +1,4 @@
 ﻿using System.Text;
-
 using Microsoft.IdentityModel.Tokens;
 
 namespace Kira.Security.Shared.Jwt.Options;
