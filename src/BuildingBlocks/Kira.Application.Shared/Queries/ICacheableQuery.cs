@@ -1,7 +1,6 @@
-﻿namespace Kira.Application.Shared.Queries
+﻿namespace Kira.Application.Shared.Queries;
+
+public interface ICacheableQuery<T>
 {
-    public interface ICacheableQuery<T>
-    {
-        string GetCacheKey();
-    }
+    string GetCacheKey();
 }

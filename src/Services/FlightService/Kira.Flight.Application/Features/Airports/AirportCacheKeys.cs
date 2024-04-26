@@ -1,7 +1,3 @@
-﻿namespace Kira.Flight.Application.Features.Airports
-{
-    public class AirportCacheKeys
-    {
-        
-    }
-}
+﻿namespace Kira.Flight.Application.Features.Airports;
+
+public class AirportCacheKeys { }

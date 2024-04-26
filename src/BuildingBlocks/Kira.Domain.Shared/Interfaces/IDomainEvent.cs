@@ -1,4 +1,3 @@
-﻿namespace Kira.Domain.Shared.Interfaces
-{
-    public interface IDomainEvent;
-}
+﻿namespace Kira.Domain.Shared.Interfaces;
+
+public interface IDomainEvent;

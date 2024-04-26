@@ -1,119 +1,80 @@
 ﻿using System;
+
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Kira.Flight.Infrastructure.Migrations
+namespace Kira.Flight.Infrastructure.Migrations;
+
+/// <inheritdoc />
+public partial class initial : Migration
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.CreateTable(
-                name: "Airplanes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    Model = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Airplanes", x => x.Id);
-                });
+        migrationBuilder.CreateTable("Airplanes",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                Name = table.Column<string>("character varying(32)", maxLength: 32, nullable: false),
+                Model = table.Column<string>("character varying(32)", maxLength: 32, nullable: false)
+            }, constraints: table => { table.PrimaryKey("PK_Airplanes", x => x.Id); });
 
-            migrationBuilder.CreateTable(
-                name: "Airports",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Airports", x => x.Id);
-                });
+        migrationBuilder.CreateTable("Airports",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                Name = table.Column<string>("character varying(32)", maxLength: 32, nullable: false)
+            }, constraints: table => { table.PrimaryKey("PK_Airports", x => x.Id); });
 
-            migrationBuilder.CreateTable(
-                name: "Seats",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    SeatNumber = table.Column<string>(type: "character varying(32)", maxLength: 32, nullable: false),
-                    FlightId = table.Column<Guid>(type: "uuid", nullable: false),
-                    IsReserved = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Seats", x => x.Id);
-                });
+        migrationBuilder.CreateTable("Seats",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                SeatNumber = table.Column<string>("character varying(32)", maxLength: 32, nullable: false),
+                FlightId = table.Column<Guid>("uuid", nullable: false),
+                IsReserved = table.Column<bool>("boolean", nullable: false)
+            }, constraints: table => { table.PrimaryKey("PK_Seats", x => x.Id); });
 
-            migrationBuilder.CreateTable(
-                name: "Flights",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    AirplaneId = table.Column<Guid>(type: "uuid", nullable: false),
-                    FromAirportId = table.Column<Guid>(type: "uuid", nullable: false),
-                    ToAirportId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    UtcDateTime = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Flights", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Flights_Airplanes_AirplaneId",
-                        column: x => x.AirplaneId,
-                        principalTable: "Airplanes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Flights_Airports_FromAirportId",
-                        column: x => x.FromAirportId,
-                        principalTable: "Airports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Flights_Airports_ToAirportId",
-                        column: x => x.ToAirportId,
-                        principalTable: "Airports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+        migrationBuilder.CreateTable("Flights",
+            table => new
+            {
+                Id = table.Column<Guid>("uuid", nullable: false),
+                AirplaneId = table.Column<Guid>("uuid", nullable: false),
+                FromAirportId = table.Column<Guid>("uuid", nullable: false),
+                ToAirportId = table.Column<Guid>("uuid", nullable: false),
+                Price = table.Column<decimal>("numeric", nullable: false),
+                UtcDateTime = table.Column<DateTimeOffset>("timestamp with time zone", nullable: false)
+            }, constraints: table =>
+            {
+                table.PrimaryKey("PK_Flights", x => x.Id);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Flights_AirplaneId",
-                table: "Flights",
-                column: "AirplaneId");
+                table.ForeignKey("FK_Flights_Airplanes_AirplaneId", x => x.AirplaneId, "Airplanes", "Id",
+                    onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Flights_FromAirportId",
-                table: "Flights",
-                column: "FromAirportId");
+                table.ForeignKey("FK_Flights_Airports_FromAirportId", x => x.FromAirportId, "Airports", "Id",
+                    onDelete: ReferentialAction.Cascade);
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Flights_ToAirportId",
-                table: "Flights",
-                column: "ToAirportId");
-        }
+                table.ForeignKey("FK_Flights_Airports_ToAirportId", x => x.ToAirportId, "Airports", "Id",
+                    onDelete: ReferentialAction.Cascade);
+            });
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "Flights");
+        migrationBuilder.CreateIndex("IX_Flights_AirplaneId", "Flights", "AirplaneId");
 
-            migrationBuilder.DropTable(
-                name: "Seats");
+        migrationBuilder.CreateIndex("IX_Flights_FromAirportId", "Flights", "FromAirportId");
 
-            migrationBuilder.DropTable(
-                name: "Airplanes");
+        migrationBuilder.CreateIndex("IX_Flights_ToAirportId", "Flights", "ToAirportId");
+    }
 
-            migrationBuilder.DropTable(
-                name: "Airports");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropTable("Flights");
+
+        migrationBuilder.DropTable("Seats");
+
+        migrationBuilder.DropTable("Airplanes");
+
+        migrationBuilder.DropTable("Airports");
     }
 }

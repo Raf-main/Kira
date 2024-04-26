@@ -1,9 +1,8 @@
-﻿namespace Kira.Domain.Shared.Interfaces
+﻿namespace Kira.Domain.Shared.Interfaces;
+
+public interface IHasDomainEvent
 {
-    public interface IHasDomainEvent
-    {
-        ICollection<IDomainEvent> DomainEvents { get; }
-        void AddDomainEvent(IDomainEvent domainEvent);
-        void ClearDomainEvents();
-    }
+    ICollection<IDomainEvent> DomainEvents { get; }
+    void AddDomainEvent(IDomainEvent domainEvent);
+    void ClearDomainEvents();
 }

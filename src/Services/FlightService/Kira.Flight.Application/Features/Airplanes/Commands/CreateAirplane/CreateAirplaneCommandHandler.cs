@@ -1,26 +1,27 @@
 ﻿using Kira.Flight.Domain.Entities;
 using Kira.Flight.Infrastructure.Interfaces;
+
 using Light.Infrastructure.Extensions.Repositories;
+
 using MediatR;
 
-namespace Kira.Flight.Application.Features.Airplanes.Commands.CreateAirplane
+namespace Kira.Flight.Application.Features.Airplanes.Commands.CreateAirplane;
+
+public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, Guid>
 {
-    public class CreateAirplaneCommandHandler : IRequestHandler<CreateAirplaneCommand, Guid>
+    private readonly IUnitOfWork _unitOfWork;
+
+    public CreateAirplaneCommandHandler(IUnitOfWork unitOfWork)
     {
-        private readonly IUnitOfWork _unitOfWork;
+        _unitOfWork = unitOfWork;
+    }
 
-        public CreateAirplaneCommandHandler(IUnitOfWork unitOfWork)
-        {
-            _unitOfWork = unitOfWork;
-        }
+    public async Task<Guid> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
+    {
+        var airplane = Airplane.Create(request.Name, request.Model);
+        await _unitOfWork.AirplaneWriteRepository.AddAsync(airplane, cancellationToken);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        public async Task<Guid> Handle(CreateAirplaneCommand request, CancellationToken cancellationToken)
-        {
-            var airplane = Airplane.Create(request.Name, request.Model);
-            await _unitOfWork.AirplaneWriteRepository.AddAsync(airplane, cancellationToken);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-            return airplane.Id;
-        }
+        return airplane.Id;
     }
 }

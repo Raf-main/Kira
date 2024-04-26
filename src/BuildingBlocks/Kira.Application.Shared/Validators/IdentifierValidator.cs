@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Kira.Application.Shared.Validators
+namespace Kira.Application.Shared.Validators;
+
+public class IdentifierValidator<T> : AbstractValidator<T>, IIdentifierValidator<T>
 {
-    public class IdentifierValidator<T> : AbstractValidator<T>, IIdentifierValidator<T>
+    public IdentifierValidator()
     {
-        public IdentifierValidator()
-        {
-            RuleFor(x => x).NotEmpty().WithMessage("Id can't be empty");
-        }
+        RuleFor(x => x).NotEmpty().WithMessage("Id can't be empty");
     }
 }

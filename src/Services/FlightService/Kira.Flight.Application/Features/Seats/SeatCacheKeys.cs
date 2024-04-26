@@ -1,7 +1,3 @@
-﻿namespace Kira.Flight.Application.Features.Seats
-{
-    public class SeatCacheKeys
-    {
-        
-    }
-}
+﻿namespace Kira.Flight.Application.Features.Seats;
+
+public class SeatCacheKeys { }

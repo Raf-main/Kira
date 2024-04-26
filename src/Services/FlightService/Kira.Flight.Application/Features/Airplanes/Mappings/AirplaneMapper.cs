@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+
 using Kira.Flight.Application.Features.Airplanes.Dto;
 using Kira.Flight.Domain.Entities;
 
-namespace Kira.Flight.Application.Features.Airplanes.Mappings
+namespace Kira.Flight.Application.Features.Airplanes.Mappings;
+
+public class AirplaneMapper : Profile
 {
-    public class AirplaneMapper : Profile
+    public AirplaneMapper()
     {
-        public AirplaneMapper()
-        {
-            CreateMap<Airplane, AirplaneDto>();
-        }
+        CreateMap<Airplane, AirplaneDto>();
     }
 }

@@ -1,12 +1,11 @@
 ﻿using System.Security.Claims;
 
-namespace Kira.Security.Shared.Jwt.Services
+namespace Kira.Security.Shared.Jwt.Services;
+
+public interface ICurrentUserService
 {
-    public interface ICurrentUserService
-    {
-        ClaimsPrincipal GetUser();
-        string GetId();
-        bool IsAuthenticated();
-        string GetUserClaim(string claimKey);
-    }
+    ClaimsPrincipal GetUser();
+    string GetId();
+    bool IsAuthenticated();
+    string GetUserClaim(string claimKey);
 }

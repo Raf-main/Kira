@@ -10,11 +10,14 @@ using Kira.Security.Shared.Jwt.Options;
 using Kira.Security.Shared.Jwt.Services;
 using Kira.Utils.Shared.Cookie;
 using Kira.Utils.Shared.Time;
+
 using Light.Infrastructure.EfCore.Services;
 using Light.Infrastructure.EfCore.Services.Interfaces;
+
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -41,7 +44,8 @@ builder.Services.AddScoped<ICookieService, CookieService>();
 // db
 builder.Services.AddDbContext<IdentityServerDbContext>(options =>
 {
-    options.UseNpgsql(identityConnectionString, sqlOptions => { sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null); });
+    options.UseNpgsql(identityConnectionString,
+        sqlOptions => { sqlOptions.EnableRetryOnFailure(3, TimeSpan.FromSeconds(3), null); });
 });
 
 builder.Services.AddScoped<DbContext, IdentityServerDbContext>();
@@ -82,10 +86,7 @@ app.Services.CreateScope().ServiceProvider.GetRequiredService<IDatabaseMigration
 app.UseSwagger();
 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 
-app.UseCors(opts =>
-{
-    opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+app.UseCors(opts => { opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 
 app.UseCustomExceptionHandler();
 app.UseAuthentication();

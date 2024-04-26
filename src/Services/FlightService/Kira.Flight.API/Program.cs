@@ -1,5 +1,6 @@
 using Kira.Flight.API.Middleware;
 using Kira.Flight.Extensions;
+
 using Light.Infrastructure.EfCore.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,10 +18,7 @@ app.UseSwagger();
 app.UseSwaggerUI(options => { options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"); });
 app.UseCustomExceptionHandler();
 
-app.UseCors(opts =>
-{
-    opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+app.UseCors(opts => { opts.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin(); });
 
 app.UseAuthentication();
 app.UseAuthorization();

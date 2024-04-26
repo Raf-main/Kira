@@ -1,14 +1,14 @@
 ﻿using AutoMapper;
+
 using Kira.Flight.Application.Features.Seats.Dto;
 using Kira.Flight.Domain.Entities;
 
-namespace Kira.Flight.Application.Features.Seats.Mappings
+namespace Kira.Flight.Application.Features.Seats.Mappings;
+
+public class SeatMapper : Profile
 {
-    public class SeatMapper : Profile
+    public SeatMapper()
     {
-        public SeatMapper()
-        {
-            CreateMap<Seat, SeatDto>();
-        }
+        CreateMap<Seat, SeatDto>();
     }
 }

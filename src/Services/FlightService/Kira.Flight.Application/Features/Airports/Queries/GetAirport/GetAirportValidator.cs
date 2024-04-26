@@ -1,12 +1,11 @@
 ﻿using FluentValidation;
 
-namespace Kira.Flight.Application.Features.Airports.Queries.GetAirport
+namespace Kira.Flight.Application.Features.Airports.Queries.GetAirport;
+
+public class GetAirportValidator : AbstractValidator<GetAirportCommand>
 {
-    public class GetAirportValidator : AbstractValidator<GetAirportCommand>
+    public GetAirportValidator(IValidator<Guid> identifierValidator)
     {
-        public GetAirportValidator(IValidator<Guid> identifierValidator)
-        {
-            RuleFor(x => x.Id).SetValidator(identifierValidator);
-        }
+        RuleFor(x => x.Id).SetValidator(identifierValidator);
     }
 }

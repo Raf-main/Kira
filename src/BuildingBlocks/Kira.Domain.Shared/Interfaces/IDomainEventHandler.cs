@@ -1,7 +1,6 @@
-﻿namespace Kira.Domain.Shared.Interfaces
+﻿namespace Kira.Domain.Shared.Interfaces;
+
+public interface IDomainEventHandler : IEventHandler
 {
-    public interface IDomainEventHandler : IEventHandler
-    {
-        public void Handle(IDomainEvent domainEvent);
-    }
+    public void Handle(IDomainEvent domainEvent);
 }
